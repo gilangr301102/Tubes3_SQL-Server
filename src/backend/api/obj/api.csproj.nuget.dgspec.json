@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/nodrop/Documents/Tubes3_SQL-Server/backend/backend/backend.csproj": {}
+    "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj": {}
   },
   "projects": {
-    "/Users/nodrop/Documents/Tubes3_SQL-Server/backend/backend/backend.csproj": {
+    "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/nodrop/Documents/Tubes3_SQL-Server/backend/backend/backend.csproj",
-        "projectName": "backend",
-        "projectPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/backend/backend/backend.csproj",
+        "projectUniqueName": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj",
+        "projectName": "api",
+        "projectPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj",
         "packagesPath": "/Users/nodrop/.nuget/packages/",
-        "outputPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/backend/backend/obj/",
+        "outputPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/nodrop/.nuget/NuGet/NuGet.Config"
