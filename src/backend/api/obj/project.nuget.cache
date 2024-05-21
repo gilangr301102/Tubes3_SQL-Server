@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "qz1q8UBBb6w7Hu+XTX5lUT/Ggb8REH8DTuk4S0OHnApbpyoA/NVyw25Ujw18Hoy1ZI4DrpGLNRht1O9aof9KZw==",
+  "dgSpecHash": "aOCR8cUvoPfeWC7D8Lcp3rZIirqx9SlayrMFTwkSIP1Ot3LqZgsxHY07eThwkkqf7k4mlAUo5Njv1Wp5T3EGcw==",
   "success": true,
   "projectFilePath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/nodrop/.nuget/packages/microsoft.aspnetcore.openapi/7.0.18/microsoft.aspnetcore.openapi.7.0.18.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

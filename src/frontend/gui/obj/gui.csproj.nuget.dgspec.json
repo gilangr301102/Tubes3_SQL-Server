@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj": {}
+    "/Users/nodrop/Documents/Tubes3_SQL-Server/src/frontend/gui/gui.csproj": {}
   },
   "projects": {
-    "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj": {
+    "/Users/nodrop/Documents/Tubes3_SQL-Server/src/frontend/gui/gui.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj",
-        "projectName": "api",
-        "projectPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj",
+        "projectUniqueName": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/frontend/gui/gui.csproj",
+        "projectName": "gui",
+        "projectPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/frontend/gui/gui.csproj",
         "packagesPath": "/Users/nodrop/.nuget/packages/",
-        "outputPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/obj/",
+        "outputPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/frontend/gui/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/nodrop/.nuget/NuGet/NuGet.Config"
@@ -20,7 +20,7 @@
           "net7.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/sdk/7.0.315/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,16 +38,6 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
-              "target": "Package",
-              "version": "[7.0.18, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.5.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -60,14 +50,11 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.315/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.316/RuntimeIdentifierGraph.json"
         }
       }
     }
