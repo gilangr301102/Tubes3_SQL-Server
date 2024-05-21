@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 25.0.1706.12
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gui", "gui\gui.csproj", "{A67469EA-2A86-4362-82A9-4C24564C1537}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gui", "gui\gui.csproj", "{05BC0129-C435-46EA-A782-A93533A6D377}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A67469EA-2A86-4362-82A9-4C24564C1537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A67469EA-2A86-4362-82A9-4C24564C1537}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A67469EA-2A86-4362-82A9-4C24564C1537}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A67469EA-2A86-4362-82A9-4C24564C1537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05BC0129-C435-46EA-A782-A93533A6D377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05BC0129-C435-46EA-A782-A93533A6D377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05BC0129-C435-46EA-A782-A93533A6D377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05BC0129-C435-46EA-A782-A93533A6D377}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8F416A2B-1657-4934-802E-66045FA6707C}
+		SolutionGuid = {CD2D3681-6B83-4EF6-B48A-A59008B712DF}
 	EndGlobalSection
 EndGlobal
