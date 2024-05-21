@@ -3,7 +3,8 @@
     public class LCS
     {
         // Longest Common Subsequence (non-contiguous)
-        public int ComputeSimilarity(string str1, string str2)
+        // Implemented using sum prefix with Dynamic Programming
+        static int ComputeSimilarity(string str1, string str2)
         {
             if (str1 == "" || str2 == "")
                 return 0;
