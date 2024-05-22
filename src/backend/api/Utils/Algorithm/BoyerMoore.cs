@@ -1,4 +1,6 @@
-﻿namespace api.Utils.Algorithm
+﻿using api.Models;
+
+namespace api.Utils.Algorithm
 {
     public class BoyerMoore
     {
@@ -38,7 +40,7 @@
         }
 
         // Search for a pattern in given text using Boyer Moore algorithm with Good suffix rule
-        public List<int> Search(string text, string pat)
+        public static List<int> Search(string text, string pat)
         {
             List<int> occurrences = new List<int>();
             int s = 0, j;
@@ -74,5 +76,10 @@
 
             return occurrences;
         }
+
+        // internal List<int> Search(Biodata biodata, string nama)
+        // {
+        //    throw new NotImplementedException();
+        // }
     }
 }

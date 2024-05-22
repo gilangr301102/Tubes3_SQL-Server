@@ -1,10 +1,10 @@
 ﻿namespace api.Utils.Algorithm
 {
-    public class LCS
+    public static class LCS
     {
         // Longest Common Subsequence (non-contiguous)
         // Implemented using sum prefix with Dynamic Programming
-        public int ComputeSimilarity(string str1, string str2)
+        public static int ComputeSimilarity(string str1, string str2)
         {
             if (str1 == "" || str2 == "")
                 return 0;

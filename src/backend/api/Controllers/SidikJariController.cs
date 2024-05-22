@@ -4,6 +4,7 @@ using api.Utils.Algorithm;
 using api.Utils.Converter;
 using System;
 using System.Collections.Generic;
+using api.Repositories;
 
 namespace api.Controllers
 {
@@ -12,6 +13,7 @@ namespace api.Controllers
     public class SidikJariController : ControllerBase
     {
         private readonly List<SidikJari> _sidikJariDatabase = new(); // Assume this is your database
+        private readonly List<Biodata> _biodataDatabase = new();
 
         // POST api/sidikjari
         [HttpPost]
@@ -25,40 +27,30 @@ namespace api.Controllers
             }
 
             // Search for the ASCII image in the SidikJari database using Boyer-Moore algorithm
-            SidikJari matchedSidikJari = FindSidikJariByAsciiImage(asciiImage);
+            SidikJari matchedSidikJari = this.FindSidikJariByAsciiImage(asciiImage);
             if (matchedSidikJari != null)
             {
                 // Search for the name in Biodata using Boyer-Moore algorithm
-                BoyerMoore boyerMoore = new BoyerMoore();
-                List<int> nameOccurrences = boyerMoore.Search(GetBiodataByName(matchedSidikJari.BiodataName), matchedSidikJari.Nama);
+                Biodata mathedBiodata = this.FindBiodataByName(matchedSidikJari.Nama);
 
-                if (nameOccurrences.Count > 0)
+                if (mathedBiodata != null)
                 {
-                    // Assuming you want to return the first occurrence
                     return Ok($"Matched Name: {matchedSidikJari.Nama}");
                 }
-                else
-                {
-                    // Perform similarity calculation using LCS algorithm
-                    var lcs = new LCS();
-                    int similarity = lcs.ComputeSimilarity(inputSidikJari.BerkasCitra, matchedSidikJari.BerkasCitra);
-                    return Ok($"Similarity: {similarity}");
-                }
+
+                return Ok($"Similarity: {LCS.ComputeSimilarity(inputSidikJari.BerkasCitra, mathedBiodata.Nama)}");
             }
 
-            return NotFound("No matching SidikJari found for the ASCII image provided.");
+            return Ok($"Similarity: {LCS.ComputeSimilarity(inputSidikJari.BerkasCitra, matchedSidikJari.BerkasCitra);}");
         }
 
         // Helper method to find SidikJari by ASCII image using Boyer-Moore algorithm
-        private SidikJari FindSidikJariByAsciiImage(string asciiImage)
+        private SidikJari? FindSidikJariByAsciiImage(string asciiImage)
         {
-            // Initialize BoyerMoore algorithm
-            BoyerMoore boyerMoore = new();
-
             foreach (var sidikJari in _sidikJariDatabase)
             {
                 // Search for the asciiImage in the database
-                List<int> imageOccurrences = boyerMoore.Search(sidikJari.BerkasCitra, asciiImage);
+                List<int> imageOccurrences = BoyerMoore.Search(sidikJari.BerkasCitra, asciiImage);
                 if (imageOccurrences.Count > 0)
                 {
                     // Assuming you want to return the first occurrence
@@ -69,13 +61,38 @@ namespace api.Controllers
             return null; // If no match found
         }
 
-        // Helper method to retrieve Biodata by name
-        private Biodata GetBiodataByName(string name)
+        private Biodata? FindBiodataByName(string name)
         {
-            // Assuming you have a method to retrieve Biodata from the database based on name
-            // Implement this method according to your database access logic
-            // For demonstration, I assume there's a method in some BiodataRepository to get Biodata by name
-            return BiodataRepository.GetBiodataByName(name);
+            foreach (var biodata in _biodataDatabase)
+            {
+                List<int> imageOccurrences = BoyerMoore.Search(biodata.Nama, name);
+                if (imageOccurrences.Count > 0)
+                {
+                    return biodata;
+                }
+            }
+
+            return null;
+        }
+
+        private int ComputeSimilarityBerkasCitra(string berkasCitra)
+        {
+
+        }
+
+        private int ComputeSimilarityName(string name)
+        {
+            int maxSimilarity = 0;
+            foreach(var biodata in _biodataDatabase)
+            {
+                int similarity = LCS.ComputeSimilarity(biodata.Nama, name);
+                if (maxSimilarity < similarity)
+                {
+                    maxSimilarity = similarity;
+                }
+            }
+
+            return maxSimilarity;
         }
     }
 }

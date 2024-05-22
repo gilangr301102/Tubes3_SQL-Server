@@ -1,12 +1,14 @@
-﻿using api.Models; // Assuming Biodata model is in this namespace
+﻿using System.Linq;
+using api.Models; // Assuming Biodata model is in this namespace
+// Add any additional using directives if needed to resolve assembly references
 
 namespace api.Repositories
 {
     public class BiodataRepository
     {
-        private readonly YourDbContext _context; // Inject your DbContext here
+        private readonly Context _context; // Ensure Context is properly referenced
 
-        public BiodataRepository(YourDbContext context)
+        public BiodataRepository(Context context)
         {
             _context = context;
         }
@@ -19,4 +21,3 @@ namespace api.Repositories
         }
     }
 }
-
