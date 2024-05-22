@@ -26,7 +26,6 @@
             _ = s.Length;
             int nm = ts.Length;
             List<int> f = PrefixFunc(ts);
-            int res = 0;
             for (int i = n + 1; i < nm; i++)
             {
                 if (f[i] == n) return true;
