@@ -16,7 +16,6 @@
     <Folder Include="Routes\" />
     <Folder Include="Utils\Converter\" />
     <Folder Include="Files\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

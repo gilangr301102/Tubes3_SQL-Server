@@ -28,20 +28,10 @@ namespace api.Controllers
 
             // Search for the ASCII image in the SidikJari database using Boyer-Moore algorithm
             SidikJari matchedSidikJari = this.FindSidikJariByAsciiImage(asciiImage);
-            if (matchedSidikJari != null)
-            {
-                // Search for the name in Biodata using Boyer-Moore algorithm
-                Biodata mathedBiodata = this.FindBiodataByName(matchedSidikJari.Nama);
 
-                if (mathedBiodata != null)
-                {
-                    return Ok($"Matched Name: {matchedSidikJari.Nama}");
-                }
+            if (matchedSidikJari == null) return Ok($"Similarity: {ComputeSimilarityBerkasCitra(asciiImage)}");
 
-                return Ok($"Similarity: {LCS.ComputeSimilarity(inputSidikJari.BerkasCitra, mathedBiodata.Nama)}");
-            }
-
-            return Ok($"Similarity: {LCS.ComputeSimilarity(inputSidikJari.BerkasCitra, matchedSidikJari.BerkasCitra);}");
+            return Ok($"Matched Name: {matchedSidikJari.Nama}");
         }
 
         // Helper method to find SidikJari by ASCII image using Boyer-Moore algorithm
@@ -50,8 +40,8 @@ namespace api.Controllers
             foreach (var sidikJari in _sidikJariDatabase)
             {
                 // Search for the asciiImage in the database
-                List<int> imageOccurrences = BoyerMoore.Search(sidikJari.BerkasCitra, asciiImage);
-                if (imageOccurrences.Count > 0)
+                bool isCitraFound = BoyerMoore.Search(sidikJari.BerkasCitra, asciiImage);
+                if (isCitraFound)
                 {
                     // Assuming you want to return the first occurrence
                     return sidikJari;
@@ -61,38 +51,28 @@ namespace api.Controllers
             return null; // If no match found
         }
 
-        private Biodata? FindBiodataByName(string name)
-        {
-            foreach (var biodata in _biodataDatabase)
-            {
-                List<int> imageOccurrences = BoyerMoore.Search(biodata.Nama, name);
-                if (imageOccurrences.Count > 0)
-                {
-                    return biodata;
-                }
-            }
-
-            return null;
-        }
-
         private int ComputeSimilarityBerkasCitra(string berkasCitra)
         {
-
-        }
-
-        private int ComputeSimilarityName(string name)
-        {
             int maxSimilarity = 0;
-            foreach(var biodata in _biodataDatabase)
+            foreach(var sidikJari in _sidikJariDatabase)
             {
-                int similarity = LCS.ComputeSimilarity(biodata.Nama, name);
-                if (maxSimilarity < similarity)
+                int similarity = LCS.ComputeSimilarity(sidikJari.BerkasCitra, berkasCitra);
+                if(maxSimilarity < similarity)
                 {
                     maxSimilarity = similarity;
                 }
             }
 
             return maxSimilarity;
+        }
+
+        private List<Biodata> getAllBiodataByName(string name)
+        {
+            var ret = new List<Biodata>();
+
+            // To do: Implement bahasa alay searching with pattern matching
+
+            return ret;
         }
     }
 }

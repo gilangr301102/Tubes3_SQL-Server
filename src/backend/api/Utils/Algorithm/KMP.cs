@@ -19,7 +19,7 @@
             return f;
         }
 
-        public int CountOccurrences(string s, string t)
+        public bool CountOccurrences(string s, string t)
         {
             string ts = t + "#" + s;
             int n = t.Length;
@@ -29,11 +29,9 @@
             int res = 0;
             for (int i = n + 1; i < nm; i++)
             {
-                if (f[i] == n)
-                    Console.WriteLine(i - n - n);
-                res++;
+                if (f[i] == n) return true;
             }
-            return res;
+            return false;
         }
     }
 }
