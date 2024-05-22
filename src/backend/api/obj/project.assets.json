@@ -469,31 +469,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Madifa\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/nodrop/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Madifa\\Documents\\Tubes3_SQL-Server\\src\\backend\\api\\api.csproj",
+      "projectUniqueName": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\Madifa\\Documents\\Tubes3_SQL-Server\\src\\backend\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\Madifa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Madifa\\Documents\\Tubes3_SQL-Server\\src\\backend\\api\\obj\\",
+      "projectPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj",
+      "packagesPath": "/Users/nodrop/.nuget/packages/",
+      "outputPath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Madifa\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/nodrop/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "/usr/local/share/dotnet/library-packs": {},
+        "/usr/local/share/dotnet/sdk/7.0.316/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -506,11 +501,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -545,7 +535,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.316/RuntimeIdentifierGraph.json"
       }
     }
   }
