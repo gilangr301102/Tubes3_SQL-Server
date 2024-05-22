@@ -38,7 +38,7 @@
         }
 
         // Search for a pattern in given text using Boyer Moore algorithm with Good suffix rule
-        static void Search(string text, string pat)
+        public void Search(string text, string pat)
         {
             int s = 0, j;
             int m = pat.Length;
