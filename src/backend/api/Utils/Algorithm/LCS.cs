@@ -1,4 +1,4 @@
-﻿namespace api.utils
+﻿namespace api.Utils.Algorithm
 {
     public class LCS
     {
