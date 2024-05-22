@@ -15,9 +15,13 @@
   <ItemGroup>
     <Folder Include="Routes\" />
     <Folder Include="Utils\Converter\" />
+    <Folder Include="Files\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Utils\Converter\" />
+    <None Remove="Files\" />
+    <None Remove="Repositories\" />
   </ItemGroup>
 </Project>

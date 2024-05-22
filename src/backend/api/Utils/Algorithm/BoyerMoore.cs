@@ -38,8 +38,9 @@
         }
 
         // Search for a pattern in given text using Boyer Moore algorithm with Good suffix rule
-        public void Search(string text, string pat)
+        public List<int> Search(string text, string pat)
         {
+            List<int> occurrences = new List<int>();
             int s = 0, j;
             int m = pat.Length;
             int n = text.Length;
@@ -47,7 +48,7 @@
             int[] bpos = new int[m + 1];
             int[] shift = new int[m + 1];
 
-            // Initialize all occurrence of shift to 0
+            // Initialize all occurrences of shift to 0
             for (int i = 0; i < m + 1; i++)
                 shift[i] = 0;
 
@@ -64,12 +65,14 @@
 
                 if (j < 0)
                 {
-                    Console.WriteLine("Pattern occurs at shift = " + s);
+                    occurrences.Add(s);
                     s += shift[0];
                 }
                 else
                     s += shift[j + 1];
             }
+
+            return occurrences;
         }
     }
 }
