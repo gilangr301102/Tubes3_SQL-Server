@@ -14,15 +14,8 @@ namespace api.Utils.Algorithm
             int m = str1.Length;
             int n = str2.Length;
             int[,] dp = new int[m + 1, n + 1];
-
-            for (int i = 0; i <= m; i++)
-            {
-                dp[i, 0] = 0;
-            }
-            for (int j = 0; j <= n; j++)
-            {
-                dp[0, j] = 0;
-            }
+            for (int i = 0; i <= m; i++) dp[i, 0] = 0;
+            for (int j = 0; j <= n; j++) dp[0, j] = 0;
             for (int i = 1; i <= m; i++)
             {
                 for (int j = 1; j <= n; j++)
@@ -57,7 +50,6 @@ namespace api.Utils.Algorithm
             for (int j = 0; j <= n; j++) dp[0, j] = 0;
             bool[] isVisited = new bool[m + 1];
             for (int i = 0; i <= m; i++) isVisited[i] = false;
-
             for (int i = 1; i <= m; i++)
             {
                 for (int j = 1; j <= n; j++)
@@ -68,6 +60,8 @@ namespace api.Utils.Algorithm
                     if (tempTypeNormalize > 0 && !isVisited[i - 1])
                     {
                         dp[i, j] = dp[i - 1, j - 1] + 1;
+                        // Handling case bahasa alay with two number convert to one letter
+                        // For example: "12"->"R", "13"->"B", etc.
                         if (tempTypeNormalize == 2 && dp[i + 1, j] < dp[i, j])
                         {
                             dp[i + 1, j] = dp[i, j];
@@ -76,10 +70,8 @@ namespace api.Utils.Algorithm
                     }
                     else
                     {
-                        if (dp[i - 1, j] >= dp[i, j - 1])
-                            dp[i, j] = dp[i - 1, j];
-                        else
-                            dp[i, j] = dp[i, j - 1];
+                        if (dp[i - 1, j] >= dp[i, j - 1]) dp[i, j] = dp[i - 1, j];
+                        else dp[i, j] = dp[i, j - 1];
                     }
                 }
             }
