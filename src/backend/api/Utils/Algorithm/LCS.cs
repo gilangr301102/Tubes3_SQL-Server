@@ -36,9 +36,8 @@ namespace api.Utils.Algorithm
             return dp[m, n];
         }
 
-        public static int ComputeSimilarity(string str1, string str2)
+        public static int ComputeSimilarityAlay(string str1, string str2)
         {
-            
             if (str1 == "" || str2 == "")
                 return 0;
             str1 = Regex.Replace(str1, @"[^\w\d]", "");
