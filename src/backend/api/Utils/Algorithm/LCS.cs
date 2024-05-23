@@ -59,7 +59,7 @@ namespace api.Utils.Algorithm
                 {
                     char currentStr1Char = str1[i - 1];
                     char nextStr1Char = (i < m && (str1[i-1]=='1')) ? str1[i] : '\0';
-                    int tempTypeNormalize = NormalizeAlayChar(currentStr1Char, nextStr1Char, str2[j - 1]);
+                    int tempTypeNormalize = CharHandler.NormalizeAlayChar(currentStr1Char, nextStr1Char, str2[j - 1]);
                     if(tempTypeNormalize==1) isType1 = true;
                     else if(tempTypeNormalize==2) isType2 = true;
                     // Handle case get maximum subsequence for choose alay converter for two number into one letter
