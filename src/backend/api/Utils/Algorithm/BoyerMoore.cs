@@ -1,4 +1,6 @@
-﻿namespace api.utils
+﻿using System;
+
+namespace api.Utils.Algorithm
 {
     public class BoyerMoore
     {
@@ -38,7 +40,7 @@
         }
 
         // Search for a pattern in given text using Boyer Moore algorithm with Good suffix rule
-        static void Search(string text, string pat)
+        public static bool Search(string text, string pat)
         {
             int s = 0, j;
             int m = pat.Length;
@@ -46,10 +48,6 @@
 
             int[] bpos = new int[m + 1];
             int[] shift = new int[m + 1];
-
-            // Initialize all occurrence of shift to 0
-            for (int i = 0; i < m + 1; i++)
-                shift[i] = 0;
 
             // Do preprocessing
             PreprocessStrongSuffix(shift, bpos, pat, m);
@@ -64,12 +62,15 @@
 
                 if (j < 0)
                 {
-                    Console.WriteLine("Pattern occurs at shift = " + s);
-                    s += shift[0];
+                    return true; // Pattern found
                 }
                 else
+                {
                     s += shift[j + 1];
+                }
             }
+
+            return false; // Pattern not found
         }
     }
 }

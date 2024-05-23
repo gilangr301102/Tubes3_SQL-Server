@@ -1,8 +1,18 @@
 ﻿<Properties StartupConfiguration="{BDCD152E-5F29-489B-A765-D482A7691A5F}|https">
-  <MonoDevelop.Ide.Workbench ActiveDocument="api/Program.cs">
+  <MonoDevelop.Ide.ItemProperties.api PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="api/Utils/Converter/ImageConverter.cs">
     <Files>
-      <File FileName="api/_Layout.cshtml" Line="1" Column="1" IsPinned="True" />
-      <File FileName="api/Program.cs" Line="16" Column="1" IsPinned="True" />
+      <File FileName="api/Utils/Helper/Enum.cs" Line="1" Column="1" />
+      <File FileName="api/Utils/Algorithm/LCS.cs" Line="39" Column="48" />
+      <File FileName="api/Program.cs" Line="30" Column="2" />
+      <File FileName="api/Controllers/SidikJariController.cs" Line="1" Column="1" />
+      <File FileName="api/Utils/Algorithm/BoyerMoore.cs" Line="75" Column="6" />
+      <File FileName="api/Utils/Helper/CharHandler.cs" Line="25" Column="1" />
+      <File FileName="api/Utils/Algorithm/KMP.cs" Line="1" Column="1" />
+      <File FileName="api/Utils/Helper/EmptyClass.cs" Line="30" Column="6" />
+      <File FileName="api/Utils/Helper/SimilarityNormalHandler.cs" Line="20" Column="10" />
+      <File FileName="api/Utils/Converter/ImageConverter.cs" Line="22" Column="18" />
+      <File FileName="api/_Layout.cshtml" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,7 +20,11 @@
           <Node name="backend" expanded="True">
             <Node name="api" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+              <Node name="Utils" expanded="True">
+                <Node name="Algorithm" expanded="True" />
+                <Node name="Converter" expanded="True" />
+                <Node name="Helper" expanded="True" />
+              </Node>
             </Node>
           </Node>
         </State>
@@ -18,10 +32,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.api PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
 </Properties>
