@@ -1,16 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "Xs/oGCK+pLtY5W86qMR8tRGw5yDATHSUmLARQxftTir63/MggtSjHr0X8NqKw6gSWM6mx+vNww30GgkBAKYcIA==",
+  "dgSpecHash": "m5xsUstEdiTF9Vz/9Ck6ycOKgzt05Yt9WE5fMiZPx3411kUBeESWfa8ipASh6i66dSWeItJ1JGOGiwXTYlwKFA==",
   "success": true,
   "projectFilePath": "/Users/nodrop/Documents/Tubes3_SQL-Server/src/backend/api/api.csproj",
   "expectedPackageFiles": [
     "/Users/nodrop/.nuget/packages/microsoft.aspnetcore.openapi/7.0.18/microsoft.aspnetcore.openapi.7.0.18.nupkg.sha512",
     "/Users/nodrop/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/microsoft.netcore.platforms/5.0.0/microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "/Users/nodrop/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/microsoft.win32.systemevents/5.0.0/microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
-    "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+    "/Users/nodrop/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
+    "/Users/nodrop/.nuget/packages/system.drawing.common/5.0.3/system.drawing.common.5.0.3.nupkg.sha512"
   ],
   "logs": []
 }
