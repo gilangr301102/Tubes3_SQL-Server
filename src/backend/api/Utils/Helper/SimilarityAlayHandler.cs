@@ -1,4 +1,5 @@
 ﻿using api.Utils.Algorithm;
+using api.Utils.Converter;
 using System.Text.RegularExpressions;
 
 namespace api.Utils.Helper
@@ -13,20 +14,20 @@ namespace api.Utils.Helper
             this.bahasaAlay = bahasaAlay;
             this.bahasaNormal = bahasaNormal;
             this.NormalizeBahasa();
+            this.bahasaAlay = ConverterAlayToNormal.GetKonversiArrayToNormal(this.bahasaAlay, this.bahasaNormal);
         }
 
         private void NormalizeBahasa()
         {
-            this.bahasaAlay = Regex.Replace(this.bahasaAlay, @"[^\w\d]", "");
-            this.bahasaNormal = Regex.Replace(this.bahasaNormal, @"[^\w\d]", "");
             this.bahasaAlay = this.bahasaAlay.ToLower();
             this.bahasaNormal = this.bahasaNormal.ToLower();
         }
 
-        private int GetLengthBahasaAlay()
+        public double GetGeometricMeanTwoString()
         {
-            return this.bahasaAlay==null ? 0 : this.bahasaAlay.Length;
+            return Math.Sqrt(this.bahasaAlay.Length * this.bahasaNormal.Length);
         }
+
 
         public int GetSimilarityBahasaAlay()
         {
@@ -35,7 +36,7 @@ namespace api.Utils.Helper
 
         public double GetPercentageOfSimilarityBahasaAlay()
         {
-            return this.GetSimilarityBahasaAlay() / this.GetLengthBahasaAlay();
+            return this.GetSimilarityBahasaAlay() / this.GetGeometricMeanTwoString();
         }
     }
 }

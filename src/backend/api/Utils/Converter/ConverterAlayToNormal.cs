@@ -5,7 +5,7 @@ namespace api.Utils.Converter
     // Converter string alay into normal using regex
     public class ConverterAlayToNormal
     {
-        public static string SplitKonversiStringAlayToNormal(string inputAlay, string inputNormal)
+        public static string GetKonversiArrayToNormal(string inputAlay, string inputNormal)
         {
             string[] kataAlayArr = inputAlay.Split(' ');
             string[] kataNormalArr = inputNormal.Split(' ');
@@ -20,7 +20,7 @@ namespace api.Utils.Converter
                 string ret = "";
                 for (int i = 0; i < lengthKataAlay; i++)
                 {
-                    string convertedWord = KonversiAlayKeNormal(ConvertToLowerCase(kataAlayArr[i]), ConvertToLowerCase(kataNormalArr[i]));
+                    string convertedWord = KonversiAlayKeNormalLogic(kataAlayArr[i], kataNormalArr[i]);
                     if (i == 0)
                         ret += convertedWord;
                     else
@@ -30,12 +30,7 @@ namespace api.Utils.Converter
             }
         }
 
-        public static string ConvertToLowerCase(string inputString)
-        {
-            return inputString.ToLower();
-        }
-
-        public static string KonversiAlayKeNormal(string inputAlay, string inputNormal)
+        public static string KonversiAlayKeNormalLogic(string inputAlay, string inputNormal)
         {
             // Kamus untuk konversi angka alay ke huruf normal
             var angkaAlayToHurufNormal = new Dictionary<char, char>
