@@ -1,31 +1,41 @@
 ﻿using api.Utils.Algorithm;
+using System.Text.RegularExpressions;
 
 namespace api.Utils.Helper
 {
     public class SimilarityAlayHandler
     {
-        private readonly string bahasaAlay;
-        private readonly string bahasaNormal;
+        private string bahasaAlay;
+        private string bahasaNormal;
 
         public SimilarityAlayHandler(string bahasaAlay, string bahasaNormal)
         {
             this.bahasaAlay = bahasaAlay;
             this.bahasaNormal = bahasaNormal;
+            this.NormalizeBahasa();
         }
 
-        private int GetLengthBahasaNormal()
+        private void NormalizeBahasa()
         {
-            return this.bahasaNormal.Length;
+            this.bahasaAlay = Regex.Replace(this.bahasaAlay, @"[^\w\d]", "");
+            this.bahasaNormal = Regex.Replace(this.bahasaNormal, @"[^\w\d]", "");
+            this.bahasaAlay = this.bahasaAlay.ToLower();
+            this.bahasaNormal = this.bahasaNormal.ToLower();
+        }
+
+        private int GetLengthBahasaAlay()
+        {
+            return this.bahasaAlay==null ? 0 : this.bahasaAlay.Length;
         }
 
         public int GetSimilarityBahasaAlay()
         {
-            return LCS.ComputeSimilarityAlay(bahasaAlay, bahasaNormal);
+            return LCS.ComputeSimilarityAlay(this.bahasaAlay, this.bahasaNormal);
         }
 
-        public float GetPercentageOfSimilarityBahasaAlay()
+        public double GetPercentageOfSimilarityBahasaAlay()
         {
-            return this.GetSimilarityBahasaAlay() / this.GetLengthBahasaNormal();
+            return this.GetSimilarityBahasaAlay() / this.GetLengthBahasaAlay();
         }
     }
 }

@@ -40,17 +40,13 @@ namespace api.Utils.Algorithm
         {
             if (str1 == "" || str2 == "")
                 return 0;
-            str1 = Regex.Replace(str1, @"[^\w\d]", "");
-            str2 = Regex.Replace(str2, @"[^\w\d]", "");
             int m = str1.Length;
             int n = str2.Length;
             int[,] dp = new int[m + 1, n + 1];
+            bool[] isVisited = new bool[m + 1];
             for (int i = 0; i <= m; i++) dp[i, 0] = 0;
             for (int j = 0; j <= n; j++) dp[0, j] = 0;
-            str2 = str2.ToLower();
-            bool[] isVisited = new bool[m + 1];
             for (int i = 0; i <= m; i++) isVisited[i] = false;
-            
             for (int i = 1; i <= m; i++)
             {
                 bool isType1 = false;
