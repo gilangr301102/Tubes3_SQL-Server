@@ -1,8 +1,9 @@
-﻿namespace api.Utils.Helper
+﻿using System;
+
+namespace api.Utils.Helper
 {
     public class CharHandler
     {
-
         public static int NormalizeAlayChar(char a, char b, char c)
         {
             if (a == '1' && b == '3' && c == 'b') return 2;
