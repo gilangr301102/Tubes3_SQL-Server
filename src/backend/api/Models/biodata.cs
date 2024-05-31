@@ -17,21 +17,21 @@ namespace api.Models
     }
 
     // Define your Context class inheriting from DbContext
-    public class Context : DbContext
-    {
-        // Define a DbSet for each entity you want to include in your database
-        public DbSet<Biodata> Biodatas { get; set; }
+    //public class Context : DbContext
+    //{
+    //    // Define a DbSet for each entity you want to include in your database
+    //    public DbSet<Biodata> Biodatas { get; set; }
 
-        // Constructor to configure the DbContext options
-        public Context(DbContextOptions<Context> options) : base(options)
-        {
-        }
+    //    // Constructor to configure the DbContext options
+    //    public Context(DbContextOptions<Context> options) : base(options)
+    //    {
+    //    }
 
-        // You can add additional configuration here if needed
-        // protected override void OnModelCreating(ModelBuilder modelBuilder)
-        // {
-        //     base.OnModelCreating(modelBuilder);
-        //     // Configure entity mappings or relationships here
-        // }
-    }
+    //    // You can add additional configuration here if needed
+    //    // protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //    // {
+    //    //     base.OnModelCreating(modelBuilder);
+    //    //     // Configure entity mappings or relationships here
+    //    // }
+    //}
 }

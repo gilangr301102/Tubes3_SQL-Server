@@ -20,59 +20,59 @@ namespace api.Controllers
         public IActionResult PostSidikJari([FromBody] SidikJari inputSidikJari)
         {
             // Convert image to ASCII
-            string asciiImage = ImageConverter.ConvertImageToAscii(inputSidikJari.BerkasCitra);
-            if (asciiImage == null)
-            {
-                return StatusCode(500, "Error converting image to ASCII");
-            }
+            //string asciiImage = ImageConverter.ConvertImageToAscii(inputSidikJari.BerkasCitra);
+            //if (asciiImage == null)
+            //{
+            //    return StatusCode(500, "Error converting image to ASCII");
+            //}
 
-            // Search for the ASCII image in the SidikJari database using Boyer-Moore algorithm
-            SidikJari matchedSidikJari = this.FindSidikJariByAsciiImage(asciiImage);
+            //// Search for the ASCII image in the SidikJari database using Boyer-Moore algorithm
+            //SidikJari matchedSidikJari = this.FindSidikJariByAsciiImage(asciiImage);
 
-            if (matchedSidikJari == null) return Ok($"Similarity: {ComputeSimilarityBerkasCitra(asciiImage)}");
-
-            return Ok($"Matched Name: {matchedSidikJari.Nama}");
+            //if (matchedSidikJari == null) return Ok($"Similarity: {ComputeSimilarityBerkasCitra(asciiImage)}");
+            return Ok($"Matched Name: ");
+            //return Ok($"Matched Name: {matchedSidikJari.Nama}");
         }
 
-        // Helper method to find SidikJari by ASCII image using Boyer-Moore algorithm
-        private SidikJari? FindSidikJariByAsciiImage(string asciiImage)
-        {
-            foreach (var sidikJari in _sidikJariDatabase)
-            {
-                // Search for the asciiImage in the database
-                bool isCitraFound = BoyerMoore.Search(sidikJari.BerkasCitra, asciiImage);
-                if (isCitraFound)
-                {
-                    // Assuming you want to return the first occurrence
-                    return sidikJari;
-                }
-            }
+        //// Helper method to find SidikJari by ASCII image using Boyer-Moore algorithm
+        //private SidikJari? FindSidikJariByAsciiImage(string asciiImage)
+        //{
+        //    foreach (var sidikJari in _sidikJariDatabase)
+        //    {
+        //        // Search for the asciiImage in the database
+        //        bool isCitraFound = BoyerMoore.Search(sidikJari.BerkasCitra, asciiImage);
+        //        if (isCitraFound)
+        //        {
+        //            // Assuming you want to return the first occurrence
+        //            return sidikJari;
+        //        }
+        //    }
 
-            return null; // If no match found
-        }
+        //    return null; // If no match found
+        //}
 
-        private int ComputeSimilarityBerkasCitra(string berkasCitra)
-        {
-            int maxSimilarity = 0;
-            foreach(var sidikJari in _sidikJariDatabase)
-            {
-                int similarity = LCS.ComputeSimilarity(sidikJari.BerkasCitra, berkasCitra);
-                if(maxSimilarity < similarity)
-                {
-                    maxSimilarity = similarity;
-                }
-            }
+        //private int ComputeSimilarityBerkasCitra(string berkasCitra)
+        //{
+        //    int maxSimilarity = 0;
+        //    foreach(var sidikJari in _sidikJariDatabase)
+        //    {
+        //        int similarity = LCS.ComputeSimilarity(sidikJari.BerkasCitra, berkasCitra);
+        //        if(maxSimilarity < similarity)
+        //        {
+        //            maxSimilarity = similarity;
+        //        }
+        //    }
 
-            return maxSimilarity;
-        }
+        //    return maxSimilarity;
+        //}
 
-        private List<Biodata> getAllBiodataByName(string name)
-        {
-            var ret = new List<Biodata>();
+        //private List<Biodata> getAllBiodataByName(string name)
+        //{
+        //    var ret = new List<Biodata>();
 
-            // To do: Implement bahasa alay searching with pattern matching
+        //    // To do: Implement bahasa alay searching with pattern matching
 
-            return ret;
-        }
+        //    return ret;
+        //}
     }
 }

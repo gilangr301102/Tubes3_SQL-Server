@@ -6,18 +6,18 @@ namespace api.Repositories
 {
     public class BiodataRepository
     {
-        private readonly Context _context; // Ensure Context is properly referenced
+        //private readonly Context _context; // Ensure Context is properly referenced
 
-        public BiodataRepository(Context context)
-        {
-            _context = context;
-        }
+        //public BiodataRepository(Context context)
+        //{
+        //    _context = context;
+        //}
 
-        public Biodata GetBiodataByName(string name)
-        {
-            // Assuming you have a DbSet<Biodata> named Biodatas in your DbContext
-            // This assumes the name is unique; adjust accordingly if it's not
-            return _context.Biodatas.FirstOrDefault(b => b.Name == name);
-        }
+        //public Biodata GetBiodataByName(string name)
+        //{
+        //    // Assuming you have a DbSet<Biodata> named Biodatas in your DbContext
+        //    // This assumes the name is unique; adjust accordingly if it's not
+        //    return _context.Biodatas.FirstOrDefault(b => b.Name == name);
+        //}
     }
 }
