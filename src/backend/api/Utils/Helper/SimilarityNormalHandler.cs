@@ -14,9 +14,14 @@ namespace api.Utils.Helper
             this.str2 = str2;
         }
 
+        public int GetLengthStr1()
+        {
+            return this.str1==null ? 0 : this.str1.Length;
+        }
+
         private int GetLengthStr2()
         {
-            return this.str2.Length;
+            return this.str2 == null ? 0 : this.str2.Length;
         }
 
         public int GetSimilarityBahasaNormal()
@@ -24,9 +29,14 @@ namespace api.Utils.Helper
             return LCS.ComputeSimilarityCommon(str1, str2);
         }
 
-        public float GetPercentageOfSimilarityNormal()
+        public double GetGeometricMeanTwoString()
         {
-            return this.GetSimilarityBahasaNormal() / this.GetLengthStr2();
+            return Math.Sqrt(this.GetLengthStr1() * this.GetLengthStr2());
+        }
+
+        public double GetPercentageOfSimilarityNormal()
+        {
+            return this.GetSimilarityBahasaNormal() / this.GetGeometricMeanTwoString();
         }
     }
 }
