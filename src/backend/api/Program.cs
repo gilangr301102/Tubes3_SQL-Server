@@ -1,9 +1,16 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using api.Interfaces;
+using api.Repositories;
+using AutoMapper;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IBiodataRepository, BiodataRepository>();
+builder.Services.AddScoped<ISidikJariRepository, SidikJariRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

@@ -25,6 +25,7 @@
     <Folder Include="Utils\Converter\" />
     <Folder Include="Files\" />
     <Folder Include="Data\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,5 +33,6 @@
     <None Remove="Files\" />
     <None Remove="Repositories\" />
     <None Remove="Data\" />
+    <None Remove="Interfaces\" />
   </ItemGroup>
 </Project>
