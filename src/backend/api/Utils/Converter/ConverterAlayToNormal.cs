@@ -5,8 +5,15 @@ namespace api.Utils.Converter
     // Converter string alay into normal using regex
     public class ConverterAlayToNormal
     {
+        private static string ConvertToLower(string s)
+        {
+            return s.ToLower();
+        }
+
         public static string GetKonversiArrayToNormal(string inputAlay, string inputNormal)
         {
+            inputAlay = ConvertToLower(inputAlay);
+            inputNormal = ConvertToLower(inputNormal);
             string[] kataAlayArr = inputAlay.Split(' ');
             string[] kataNormalArr = inputNormal.Split(' ');
             int lengthKataAlay = kataAlayArr.Length;

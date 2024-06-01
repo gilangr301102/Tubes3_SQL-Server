@@ -13,14 +13,6 @@ namespace api.Utils.Helper
         {
             this.bahasaAlay = bahasaAlay;
             this.bahasaNormal = bahasaNormal;
-            this.NormalizeBahasa();
-            this.bahasaAlay = ConverterAlayToNormal.GetKonversiArrayToNormal(this.bahasaAlay, this.bahasaNormal);
-        }
-
-        private void NormalizeBahasa()
-        {
-            this.bahasaAlay = this.bahasaAlay.ToLower();
-            this.bahasaNormal = this.bahasaNormal.ToLower();
         }
 
         public double GetGeometricMeanTwoString()

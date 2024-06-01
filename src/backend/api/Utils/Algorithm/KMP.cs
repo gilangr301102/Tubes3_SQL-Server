@@ -19,7 +19,7 @@
             return f;
         }
 
-        public bool CountOccurrences(string s, string t)
+        public static bool Search(string s, string t)
         {
             string ts = t + "#" + s;
             int n = t.Length;

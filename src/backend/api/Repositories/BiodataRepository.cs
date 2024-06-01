@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Cryptography;
 using api.Data;
 using api.Models; // Assuming Biodata model is in this namespace
 using api.Utils.Algorithm;
@@ -17,7 +18,7 @@ namespace api.Repositories
             _context = context;
         }
 
-        public ICollection<Biodata> GetBiodataByName(string name)
+        public ICollection<Biodata> GetBiodataByName(string name, int algorithm = 0)
         {
             var biodatas = _context.Biodatas.ToList();
             var result = new List<Biodata>();
@@ -25,13 +26,24 @@ namespace api.Repositories
             foreach (var biodata in biodatas)
             {
                 string normalName = ConverterAlayToNormal.KonversiAlayKeNormalLogic(name, biodata.Nama);
-                if (BoyerMoore.Search(biodata.Nama, normalName))
+                bool isMatch = false;
+
+                if (algorithm == 0)
+                {
+                    isMatch = BoyerMoore.Search(biodata.Nama, normalName);
+                }
+                else if (algorithm == 1)
+                {
+                    isMatch = KMP.Search(biodata.Nama, normalName);
+                }
+
+                if (isMatch)
                 {
                     result.Add(biodata);
                 }
                 else
                 {
-                    var similarityHandler = new SimilarityAlayHandler(name, biodata.Nama);
+                    var similarityHandler = new SimilarityAlayHandler(normalName, biodata.Nama);
                     if(similarityHandler.GetPercentageOfSimilarityBahasaAlay() >= 0.71)
                     {
                         result.Add(biodata);
