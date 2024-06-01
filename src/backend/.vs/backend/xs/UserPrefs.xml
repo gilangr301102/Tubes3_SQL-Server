@@ -1,35 +1,34 @@
 ﻿<Properties StartupConfiguration="{BDCD152E-5F29-489B-A765-D482A7691A5F}|https">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.api PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="api/Repositories/BiodataRepository.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="api/Program.cs">
     <Files>
-      <File FileName="api/Utils/Helper/Enum.cs" />
-      <File FileName="api/Utils/Algorithm/LCS.cs" Line="59" Column="18" />
-      <File FileName="api/Program.cs" />
-      <File FileName="api/Controllers/SidikJariController.cs" Line="23" Column="41" />
-      <File FileName="api/Utils/Algorithm/BoyerMoore.cs" Line="75" Column="6" />
-      <File FileName="api/Utils/Helper/CharHandler.cs" Line="6" Column="44" />
-      <File FileName="api/Utils/Algorithm/KMP.cs" Line="1" Column="1" />
-      <File FileName="api/Utils/Helper/SimilarityNormalHandler.cs" Line="20" Column="10" />
-      <File FileName="api/Utils/Converter/ImageConverter.cs" Line="22" Column="18" />
-      <File FileName="api/_Layout.cshtml" />
-      <File FileName="api/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
-      <File FileName="api/Models/biodata.cs" Line="16" Column="28" />
-      <File FileName="api/Utils/Algorithm/ImageProcessor.cs" Line="1" Column="1" />
+      <File FileName="api/Data/DataContext.cs" Line="18" Column="58" />
+      <File FileName="api/Repositories/BiodataRepository.cs" Line="13" Column="56" />
+      <File FileName="api/Models/Biodata.cs" Line="1" Column="1" />
+      <File FileName="api/Utils/Algorithm/KMP.cs" Line="25" Column="30" />
+      <File FileName="api/Utils/Algorithm/BoyerMoore.cs" Line="19" Column="1" />
+      <File FileName="api/Utils/Algorithm/LCS.cs" Line="12" Column="42" />
+      <File FileName="api/Utils/Helper/CharHandler.cs" Line="1" Column="1" />
+      <File FileName="api/Utils/Converter/ConverterAlayToNormal.cs" Line="1" Column="1" />
       <File FileName="api/Utils/Helper/SimilarityAlayHandler.cs" Line="1" Column="1" />
-      <File FileName="api/Properties/launchSettings.json" Line="1" Column="1" />
-      <File FileName="api/Repositories/BiodataRepository.cs" Line="24" Column="1" />
+      <File FileName="api/Repositories/SidikJariRepository.cs" Line="8" Column="27" />
+      <File FileName="api/Interfaces/IBiodataRepository.cs" Line="9" Column="6" />
+      <File FileName="api/Interfaces/ISidikJariRepository.cs" Line="8" Column="9" />
+      <File FileName="api/Program.cs" Line="19" Column="40" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="backend" expanded="True">
             <Node name="api" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Data" expanded="True" />
+              <Node name="Files" expanded="True" />
+              <Node name="Interfaces" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Properties" expanded="True" />
-              <Node name="Repositories" expanded="True">
-                <Node name="BiodataRepository.cs" selected="True" />
-              </Node>
+              <Node name="Repositories" expanded="True" />
               <Node name="Utils" expanded="True">
                 <Node name="Algorithm" expanded="True" />
                 <Node name="Converter" expanded="True" />
@@ -41,10 +40,8 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
