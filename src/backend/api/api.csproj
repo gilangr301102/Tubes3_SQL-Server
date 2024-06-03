@@ -19,20 +19,39 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="MozJpegSharp.GdiPlus" Version="3.0.8" />
+    <PackageReference Include="PDFiumSharp.GdiPlusV2" Version="1.1.4" />
+    <PackageReference Include="Codenet.Drawing.Common.GdiPlus" Version="2.0.1" />
+    <PackageReference Include="Codenet.Drawing.Util.GdiPlus" Version="2.0.1" />
+    <PackageReference Include="Azuxiren.GdiPlusExtensions" Version="0.1.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.3" />
+    <PackageReference Include="SixLabors.ImageSharp.Web" Version="3.1.2" />
+    <PackageReference Include="ZXing.Net.Bindings.ImageSharp" Version="0.16.14" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Routes\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+    <Folder Include="Utils\Algorithm\" />
     <Folder Include="Utils\Converter\" />
+    <Folder Include="Utils\Helper\" />
     <Folder Include="Files\" />
     <Folder Include="Data\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Routes\" />
+    <None Remove="Controllers\" />
+    <None Remove="Models\" />
+    <None Remove="Utils\Algorithm\" />
     <None Remove="Utils\Converter\" />
+    <None Remove="Utils\Helper\" />
     <None Remove="Files\" />
-    <None Remove="Repositories\" />
     <None Remove="Data\" />
     <None Remove="Interfaces\" />
+    <None Remove="Repositories\" />
   </ItemGroup>
 </Project>
