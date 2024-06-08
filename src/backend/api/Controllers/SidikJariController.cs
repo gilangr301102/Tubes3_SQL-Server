@@ -5,6 +5,7 @@ using api.Utils.Converter;
 using System;
 using System.Collections.Generic;
 using api.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -14,6 +15,15 @@ namespace api.Controllers
     {
         private readonly List<SidikJari> _sidikJariDatabase = new(); // Assume this is your database
         private readonly List<Biodata> _biodataDatabase = new();
+
+        private readonly ILogger<SidikJariController> _logger;
+        private readonly DbContext _context;
+
+        public SidikJariController(ILogger<SidikJariController> logger, DbContext sidikJariDbContext)
+        {
+            _logger = logger;
+            _context = sidikJariDbContext;
+        }
 
         // POST api/sidikjari
         [HttpPost]

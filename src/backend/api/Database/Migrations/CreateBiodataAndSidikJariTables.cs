@@ -10,6 +10,7 @@ namespace api.Migrations
                 name: "Biodatas",
                 columns: table => new
                 {
+                    NIK = table.Column<string>(nullable: false),
                     Nama = table.Column<string>(nullable: false),
                     TempatLahir = table.Column<string>(nullable: false),
                     TanggalLahir = table.Column<string>(nullable: false),
@@ -23,7 +24,7 @@ namespace api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Biodatas", x => new { x.Nama, x.TempatLahir, x.TanggalLahir });
+                    table.PrimaryKey("PK_Biodatas", x => x.NIK);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,10 +33,6 @@ namespace api.Migrations
                 {
                     BerkasCitra = table.Column<string>(nullable: false),
                     Nama = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SidikJaries", x => new { x.BerkasCitra, x.Nama });
                 });
         }
 

@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
 using api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Database.Data
 {
@@ -10,7 +11,7 @@ namespace api.Database.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=tubes3db;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=tubes3db;Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;");
         }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
@@ -21,12 +22,13 @@ namespace api.Database.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure primary keys
+            // Configure primary key for Biodata
             modelBuilder.Entity<Biodata>()
-                .HasKey(b => new { b.Nama, b.TempatLahir, b.TanggalLahir });
+                .HasKey(b => b.NIK);
 
+            // Configure SidikJari as keyless
             modelBuilder.Entity<SidikJari>()
-                .HasKey(s => new { s.BerkasCitra, s.Nama });
+                .HasNoKey();
         }
     }
 }
