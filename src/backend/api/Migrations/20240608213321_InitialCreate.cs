@@ -9,6 +9,8 @@ using api.Database.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using api.Models;
+using System.Text.Json;
+using api.Models;
 
 #nullable disable
 
@@ -53,10 +55,12 @@ namespace api.Migrations
                 table.PrimaryKey("PK_sidik_jari", x => x.Id);
             });
 
+            var dataFilePath = Path.Combine(Directory.GetCurrentDirectory(), "datas.json");
+            var data = LoadDataFromFile(dataFilePath);
+
             var imagePaths = GetAllImagePaths();
-            Console.WriteLine("Debug image paths length: ");
-            Console.WriteLine(11);
-            var randomNames = GenerateRandomNames(10);
+
+            var randomNames = GenerateRandomNames(10, data);
 
             var usedNIKs = new HashSet<string>();
 
@@ -65,9 +69,9 @@ namespace api.Migrations
             var biodataEntries = new List<BiodataRequest>();
             var sidikJariEntries = new List<SidikJariRequest>();
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 18; i++)
             {
-                Console.WriteLine($"Processing entry {i + 1}/{11}...");
+                Console.WriteLine($"Processing entry {i + 1}/{18}...");
 
                 string nik;
                 do
@@ -80,80 +84,27 @@ namespace api.Migrations
 
                 var binaryMatrix = ImageConverter.BitmapToBinaryMatrix(imagePaths[i]);
                 var asciiSegments = ImageConverter.Get30PixelAscii(binaryMatrix);
-                var base64Segment = ImageConverter.EncodeAsciiToBase64(asciiSegments[0]);
+                var asciiBuilder = new StringBuilder();
+                foreach (var segment in asciiSegments)
+                {
+                    asciiBuilder.Append(segment);
+                }
+                var base64Segment = asciiBuilder.ToString();
+
                 var gender = random.Next(2) == 0 ? "LakiLaki" : "Perempuan";
-                var bloodTypes = new string[] { "O", "A", "B", "AB" };
-                var bloodType = bloodTypes[random.Next(bloodTypes.Length)];
-                var maritalStatuses = new string[] { "Menikah", "BelumMenikah", "Cerai" };
-                var maritalStatus = maritalStatuses[random.Next(maritalStatuses.Length)];
-                var cityNames = new string[] { "New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose", "Austin", "Jacksonville", "San Francisco", "Columbus", "Fort Worth", "Indianapolis", "Charlotte", "Seattle", "Denver", "Washington", "Boston", "El Paso", "Detroit", "Nashville", "Portland", "Memphis", "Oklahoma City", "Las Vegas", "Louisville", "Baltimore", "Milwaukee", "Albuquerque", "Tucson", "Fresno", "Sacramento", "Mesa", "Atlanta", "Kansas City", "Colorado Springs", "Miami", "Raleigh", "Omaha", "Long Beach", "Virginia Beach", "Oakland", "Minneapolis", "Tulsa", "Arlington", "Tampa" };
-                var city = cityNames[random.Next(cityNames.Length)];
+                var bloodType = data.bloodTypes[random.Next(data.bloodTypes.Count)];
+                var maritalStatus = data.maritalStatuses[random.Next(data.maritalStatuses.Count)];
+                var city = data.cityNames[random.Next(data.cityNames.Count)];
+
                 DateTime startDate = new DateTime(1950, 1, 1);
                 DateTime endDate = new DateTime(2000, 12, 31);
                 TimeSpan range = endDate - startDate;
                 var randomBirthDate = startDate.AddDays(random.Next(range.Days));
-                string[] jobs = new string[]
-                {
-            "Software Developer",
-            "Teacher",
-            "Nurse",
-            "Doctor",
-            "Engineer",
-            "Accountant",
-            "Chef",
-            "Writer",
-            "Artist",
-            "Electrician"
-                };
-                var randomJob = jobs[random.Next(jobs.Length)];
 
-                string[] nationalities = new string[]
-                {
-            "Indonesia",
-            "United States",
-            "China",
-            "India",
-            "Brazil",
-            "Pakistan",
-            "Nigeria",
-            "Bangladesh",
-            "Russia",
-            "Mexico"
-                };
-
-                var randomNationality = nationalities[random.Next(nationalities.Length)];
-
-                string[] religions = new string[]
-                {
-            "Islam",
-            "Christianity",
-            "Hinduism",
-            "Buddhism",
-            "Sikhism",
-            "Judaism",
-            "Bahá'í Faith",
-            "Jainism",
-            "Shinto",
-            "Taoism"
-                };
-
-                var randomReligion = religions[random.Next(religions.Length)];
-
-                string[] addresses = new string[]
-                {
-            "123 Main Street",
-            "456 Elm Avenue",
-            "789 Oak Lane",
-            "101 Pine Road",
-            "202 Maple Court",
-            "303 Cedar Drive",
-            "404 Walnut Boulevard",
-            "505 Spruce Way",
-            "606 Birch Street",
-            "707 Sycamore Lane"
-                };
-
-                var randomAddress = addresses[random.Next(addresses.Length)];
+                var randomJob = data.jobs[random.Next(data.jobs.Count)];
+                var randomNationality = data.nationalities[random.Next(data.nationalities.Count)];
+                var randomReligion = data.religions[random.Next(data.religions.Count)];
+                var randomAddress = data.addresses[random.Next(data.addresses.Count)];
 
                 biodataEntries.Add(new BiodataRequest
                 {
@@ -174,31 +125,12 @@ namespace api.Migrations
 
                 string berkasCitra = base64Segment;
 
-                var truncatedBerkasCitra = berkasCitra.Substring(0, Math.Min(berkasCitra.Length, 450));
                 sidikJariEntries.Add(new SidikJariRequest
                 {
-                    berkas_citra = AesEncryption.EncryptString(truncatedBerkasCitra),
+                    berkas_citra = AesEncryption.EncryptString(berkasCitra),
                     nama = AesEncryption.EncryptString(alayName)
                 });
-
-                Console.WriteLine($"Completed entry {i + 1}/{11}");
-                Console.WriteLine("Biodata entry:");
-                Console.WriteLine($"NIK: {biodataEntries.Last().NIK}");
-                Console.WriteLine($"Nama: {biodataEntries.Last().nama}");
-                Console.WriteLine($"Tempat Lahir: {biodataEntries.Last().tempat_lahir}");
-                Console.WriteLine($"Tanggal Lahir: {biodataEntries.Last().tanggal_lahir}");
-                Console.WriteLine($"Jenis Kelamin: {biodataEntries.Last().jenis_kelamin}");
-                Console.WriteLine($"Golongan Darah: {biodataEntries.Last().golongan_darah}");
-                Console.WriteLine($"Alamat: {biodataEntries.Last().alamat}");
-                Console.WriteLine($"Agama: {biodataEntries.Last().agama}");
-                Console.WriteLine($"Status Perkawinan: {biodataEntries.Last().status_perkawinan}");
-                Console.WriteLine($"Pekerjaan: {biodataEntries.Last().pekerjaan}");
-                Console.WriteLine($"Kewarganegaraan: {biodataEntries.Last().kewarganegaraan}");
-                Console.WriteLine("Sidik Jari entry:");
-                Console.WriteLine($"Berkas Citra: {sidikJariEntries.Last().berkas_citra}");
-                Console.WriteLine($"Nama: {sidikJariEntries.Last().nama}");
             }
-
 
             foreach(var entry in  biodataEntries)
             {
@@ -220,7 +152,9 @@ namespace api.Migrations
         private static string[] GetAllImagePaths()
         {
             var datasetDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Dataset");
-            return Directory.GetFiles(datasetDirectory, "*.BMP");
+            var imagePaths = Directory.GetFiles(datasetDirectory, "*.BMP");
+
+            return imagePaths;
         }
 
         private static string GenerateRandomNIK(Random random)
@@ -228,47 +162,82 @@ namespace api.Migrations
             return random.Next(100000, 999999).ToString("D10");
         }
 
-        private static string[] GenerateRandomNames(int count)
+        private static string[] GenerateRandomNames(int count, DataModel data)
         {
-            var names = new string[]
-            {
-                "John Doe", "Jane Smith", "Alice Johnson", "Robert Brown", "Michael Davis",
-                "Emily Wilson", "Daniel Martinez", "Sophia Anderson", "James Taylor", "Grace Thomas"
-            };
             var random = new Random();
             return Enumerable.Range(0, count)
-                             .Select(_ => names[random.Next(names.Length)])
+                             .Select(_ => data.names[random.Next(data.names.Count)])
                              .ToArray();
+        }
+
+        private static DataModel LoadDataFromFile(string filePath)
+        {
+            var json = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<DataModel>(json);
         }
 
         private static string ConvertToAlay(string name)
         {
             var alayWords = new Dictionary<char, char>
-            {
-                { 'a', '4' }, { 'b', '8' }, { 'e', '3' }, { 'i', '1' }, { 'o', '0' },
-                { 's', '5' }, { 't', '7' }, { 'z', '2' }
-            };
+        {
+            { 'a', '4' }, { 'b', '8' }, { 'e', '3' }, { 'i', '1' }, { 'o', '0' },
+            { 's', '5' }, { 't', '7' }, { 'z', '2' }
+        };
 
+            var vowels = new HashSet<char> { 'a', 'e', 'i', 'o', 'u' };
             var random = new Random();
-            var sb = new StringBuilder();
+            var alayBuilder = new StringBuilder();
 
-            foreach (var c in name.ToLower())
+            foreach (var word in name.Split(' '))
             {
-                if (alayWords.ContainsKey(c))
+                var alayWord = new StringBuilder();
+                var abbreviationWord = new StringBuilder();
+
+                foreach (var c in word.ToLower())
                 {
-                    sb.Append(alayWords[c]);
+                    // Convert to "alay" version
+                    if (alayWords.ContainsKey(c))
+                    {
+                        alayWord.Append(alayWords[c]);
+                    }
+                    else if (c == 'g')
+                    {
+                        alayWord.Append(random.Next(2) == 0 ? '6' : '9');  // Randomly choose between '6' and '9'
+                    }
+                    else
+                    {
+                        alayWord.Append(c);
+                    }
+
+                    // Create abbreviation by removing vowels
+                    if (!vowels.Contains(c))
+                    {
+                        abbreviationWord.Append(c);
+                    }
                 }
-                else if (c == 'g')
+
+                // Capitalize the first letter of the abbreviated word and add to the abbreviation string
+                if (abbreviationWord.Length > 0)
                 {
-                    sb.Append(random.Next(2) == 0 ? '6' : '9');  // Randomly choose between '6' and '9'
+                    abbreviationWord[0] = char.ToUpper(abbreviationWord[0]);
                 }
-                else
-                {
-                    sb.Append(c);
-                }
+
+                // Add the processed word to the alay string
+                alayBuilder.Append(alayWord).Append(' ');
+
+                // Append the abbreviated word to the final string
+                alayBuilder.Append(abbreviationWord).Append(' ');
             }
 
-            return sb.ToString();
+            // Remove the trailing space
+            if (alayBuilder.Length > 0)
+            {
+                alayBuilder.Length--;
+            }
+
+            string alayName = alayBuilder.ToString();
+
+            return alayName;
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -281,4 +250,3 @@ namespace api.Migrations
         }
     }
 }
-

@@ -2,6 +2,7 @@
 {
     public class SidikJariResponse
     {
+        public int Id { get; set; }
         public required string berkas_citra { get; set; }
         public required string nama { get; set; }
     }

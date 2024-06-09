@@ -21,11 +21,11 @@ namespace api.Database.Data
             base.OnModelCreating(modelBuilder);
 
             // Configure primary key for BiodataResponse
-            modelBuilder.Entity<BiodataRequest>()
+            modelBuilder.Entity<BiodataResponse>()
                 .HasKey(b => b.NIK);
 
             // Configure SidikJariResponse as keyless
-            modelBuilder.Entity<SidikJariRequest>()
+            modelBuilder.Entity<SidikJariResponse>()
                 .HasKey(b => b.Id);
         }
     }

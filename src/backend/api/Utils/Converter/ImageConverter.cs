@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -15,19 +16,36 @@ namespace api.Utils.Converter
         public static int[,] BitmapToBinaryMatrix(string imagePath)
         {
             Console.WriteLine($"Converting image at {imagePath} to binary matrix...");
-            using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
+            using (var image = Image.Load<Rgba32>(imagePath))
             {
                 int width = image.Width;
                 int height = image.Height;
                 int[,] binaryValues = new int[width, height];
 
-                for (int y = 0; y < height; y++)
+                using (var sha256 = SHA256.Create())
                 {
-                    for (int x = 0; x < width; x++)
+                    // Convert the image to a byte array
+                    byte[] imageData;
+                    using (var stream = new MemoryStream())
                     {
-                        Rgba32 pixelColor = image[x, y];
-                        int grayscaleValue = (int)(pixelColor.R * RedCoefficient + pixelColor.G * GreenCoefficient + pixelColor.B * BlueCoefficient);
-                        binaryValues[x, y] = (grayscaleValue < 128) ? 0 : 1;
+                        image.SaveAsBmp(stream);
+                        imageData = stream.ToArray();
+                    }
+
+                    // Compute the SHA-256 hash of the image byte array
+                    byte[] hash = sha256.ComputeHash(imageData);
+
+                    // Convert the hash to a binary matrix
+                    int index = 0;
+                    for (int y = 0; y < height; y++)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+                            // Use only the least significant bit of each byte in the hash
+                            int grayscaleValue = hash[index] & 0x01;
+                            binaryValues[x, y] = grayscaleValue;
+                            index = (index + 1) % hash.Length;
+                        }
                     }
                 }
 
