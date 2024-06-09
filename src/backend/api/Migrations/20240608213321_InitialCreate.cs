@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using api.Utils.Helper;
+using api.Database.Data;
 using static api.Utils.Helper.Enum;
 
 #nullable disable
@@ -56,11 +58,6 @@ namespace api.Migrations
                     { AesEncryption.EncryptString("1352123456"), AesEncryption.EncryptString("Religion A"), AesEncryption.EncryptString("Address A"), AesEncryption.EncryptString("O"), AesEncryption.EncryptString("LakiLaki"), AesEncryption.EncryptString("Country A"), AesEncryption.EncryptString("John Doe"), AesEncryption.EncryptString("Job A"), AesEncryption.EncryptString("BelumMenikah"), AesEncryption.EncryptString("1990-01-01"), AesEncryption.EncryptString("City A") },
                     { AesEncryption.EncryptString("1352123457"), AesEncryption.EncryptString("Religion B"), AesEncryption.EncryptString("Address B"), AesEncryption.EncryptString("A"), AesEncryption.EncryptString("Perempuan"), AesEncryption.EncryptString("Country B"), AesEncryption.EncryptString("Jane Smith"), AesEncryption.EncryptString("Job B"), AesEncryption.EncryptString("Menikah"), AesEncryption.EncryptString("1992-02-02"), AesEncryption.EncryptString("City B") }
                 });
-                // values: new object[,]
-                // {
-                //     { "1352123456", "Religion A", "Address A", "O", 0, "Country A", "John Doe", "Job A", 0, "1990-01-01", "City A" },
-                //     { "1352123457", "Religion B", "Address B", "A", 1, "Country B", "Jane Smith", "Job B", 1, "1992-02-02", "City B" }
-                // });
 
             migrationBuilder.InsertData(
                 table: "sidik_jari",
