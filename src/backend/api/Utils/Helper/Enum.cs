@@ -8,7 +8,7 @@
             Perempuan,
         }
 
-        public enum StatusPerkawinanEnum
+        public enum status_perkawinanEnum
         {
             BelumMenikah,
             Menikah,
