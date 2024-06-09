@@ -19,6 +19,11 @@ namespace api.Repositories
             _context = context;
         }
 
+        public string RemoveNullCharacters(string input)
+        {
+            return input==null ? "" : input.Replace("\u0000", "");
+        }
+
         public ICollection<BiodataResponse> GetBiodataByName(string name, int algorithm = 0)
         {
             var biodatas = _context.biodata.ToList();
@@ -27,17 +32,17 @@ namespace api.Repositories
             foreach (var biodata in biodatas)
             {
                 // Decrypt each property individually
-                biodata.NIK = AesEncryption.DecryptString(biodata.NIK);
-                biodata.nama = AesEncryption.DecryptString(biodata.nama);
-                biodata.alamat = AesEncryption.DecryptString(biodata.alamat);
-                biodata.pekerjaan = AesEncryption.DecryptString(biodata.pekerjaan);
-                biodata.tempat_lahir = AesEncryption.DecryptString(biodata.tempat_lahir);
-                biodata.tanggal_lahir = AesEncryption.DecryptString(biodata.tanggal_lahir);
-                biodata.agama = AesEncryption.DecryptString(biodata.agama);
-                biodata.golongan_darah = AesEncryption.DecryptString(biodata.golongan_darah);
-                biodata.status_perkawinan = AesEncryption.DecryptString(biodata.status_perkawinan);
-                biodata.kewarganegaraan = AesEncryption.DecryptString(biodata.kewarganegaraan);
-                biodata.jenis_kelamin = AesEncryption.DecryptString(biodata.jenis_kelamin);
+                biodata.NIK = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.NIK));
+                biodata.nama = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.nama));
+                biodata.alamat = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.alamat));
+                biodata.pekerjaan = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.pekerjaan));
+                biodata.tempat_lahir = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.tempat_lahir));
+                biodata.tanggal_lahir = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.tanggal_lahir));
+                biodata.agama = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.agama));
+                biodata.golongan_darah = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.golongan_darah));
+                biodata.status_perkawinan = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.status_perkawinan));
+                biodata.kewarganegaraan = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.kewarganegaraan));
+                biodata.jenis_kelamin = RemoveNullCharacters(AesEncryption.DecryptWithPadding(biodata.jenis_kelamin));
 
                 string normalName = ConverterAlayToNormal.GetKonversiArrayToNormal(name, biodata.nama);
                 string lowerNormalName = biodata.nama.ToLower();
@@ -64,7 +69,7 @@ namespace api.Repositories
                     similarityPercentage = similarityHandler.GetPercentageOfSimilarityBahasaAlay();
                 }
 
-                if(similarityPercentage >= 0.80)
+                if(similarityPercentage >= 0.70)
                 {
                     similarityPercentage *= 100;
                     result.Add(new BiodataResponse

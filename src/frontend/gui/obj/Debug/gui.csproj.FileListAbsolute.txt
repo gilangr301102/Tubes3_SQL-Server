@@ -1,0 +1,12 @@
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\obj\Debug\gui.csproj.AssemblyReference.cache
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\obj\Debug\gui.Properties.Resources.resources
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\obj\Debug\gui.csproj.GenerateResource.cache
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\obj\Debug\gui.csproj.CoreCompileInputs.cache
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\bin\Debug\gui.exe.config
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\bin\Debug\gui.exe
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\bin\Debug\gui.pdb
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\obj\Debug\gui.csproj.Up2Date
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\obj\Debug\gui.exe
+C:\Users\Madifa\Documents\cadangan_repo\src\frontend\gui\obj\Debug\gui.pdb

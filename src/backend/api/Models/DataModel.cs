@@ -13,4 +13,12 @@ namespace api.Models
         public List<string> bloodTypes { get; set; }
         public List<string> maritalStatuses { get; set; }
     }
+
+    public class APIResponse
+    {
+        public ICollection<BiodataResponse>? biodataRes { get; set; }
+        public SidikJariResponse? sidikJariRes { get; set; }
+        public string message { get; set; }
+        public string timeExecution {  get; set; }
+    }
 }

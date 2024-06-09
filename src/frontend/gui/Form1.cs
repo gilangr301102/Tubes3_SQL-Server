@@ -1,9 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Windows.Forms;
+using gui.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
+using ProgressBar = System.Windows.Forms.ProgressBar;
 
-namespace FingerprintApp
+
+namespace gui
 {
     public class MainForm : Form
     {
@@ -20,6 +29,7 @@ namespace FingerprintApp
         private PictureBox pictureBoxMatch;
         private PictureBox pictureBoxBiodata;
         private string selectedAlgorithm = "BM";
+        private ProgressBar progressBar;
 
         public MainForm()
         {
@@ -144,7 +154,7 @@ namespace FingerprintApp
             this.lblSearchTime.Name = "lblSearchTime";
             this.lblSearchTime.Size = new System.Drawing.Size(100, 13);
             this.lblSearchTime.TabIndex = 7;
-            this.lblSearchTime.Text = "Waktu Pencarian: xxx ms";
+            this.lblSearchTime.Text = "Waktu Pencarian: N/A ms";
 
             // 
             // lblMatchPercentage
@@ -154,7 +164,7 @@ namespace FingerprintApp
             this.lblMatchPercentage.Name = "lblMatchPercentage";
             this.lblMatchPercentage.Size = new System.Drawing.Size(100, 13);
             this.lblMatchPercentage.TabIndex = 8;
-            this.lblMatchPercentage.Text = "Persentase Kecocokan: xx%";
+            this.lblMatchPercentage.Text = "Persentase Kecocokan: N/A %";
 
             // 
             // MainForm
@@ -193,36 +203,162 @@ namespace FingerprintApp
             selectedAlgorithm = "KMP";
         }
 
-        private void BtnSearch_Click(object sender, EventArgs e)
+        private async void BtnSearch_Click(object sender, EventArgs e)
         {
+            // if (pictureBoxInput.Image == null)
+            // {
+            //     MessageBox.Show("Please select an image first.");
+            //     return;
+            // }
+
+            // // Simulate backend processing
+            // Stopwatch stopwatch = new Stopwatch();
+            // stopwatch.Start();
+
+            // // Simulate matching process
+            // System.Threading.Thread.Sleep(500); // Simulate time delay for processing
+
+            // stopwatch.Stop();
+
+            // // Simulate results
+            // pictureBoxMatch.Image = pictureBoxInput.Image; // For demonstration, just copy the input image
+            // pictureBoxBiodata.Image = pictureBoxInput.Image; // For demonstration, just copy the input image
+            // lblSearchTime.Text = $"Waktu Pencarian: {stopwatch.ElapsedMilliseconds} ms";
+            // lblMatchPercentage.Text = "Persentase Kecocokan: 95%"; // Simulated match percentage
+
             if (pictureBoxInput.Image == null)
             {
                 MessageBox.Show("Please select an image first.");
                 return;
             }
 
-            // Simulate backend processing
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            this.progressBar = new ProgressBar();
+            this.progressBar.Location = new System.Drawing.Point(12, 410);
+            this.progressBar.Size = new System.Drawing.Size(612, 10);
+            this.progressBar.Style = ProgressBarStyle.Marquee;
+            this.Controls.Add(this.progressBar);
 
-            // Simulate matching process
-            System.Threading.Thread.Sleep(500); // Simulate time delay for processing
+            try
+            {
+                // Start the progress bar
+                progressBar.Visible = true;
+                // Convert image to base64 string
+                string imageBase64 = ImageToBase64(pictureBoxInput.Image);
 
-            stopwatch.Stop();
+                // Construct request body
+                var requestBody = new RequestBody
+                {
+                    berkas_citra = imageBase64,
+                    algorithm = selectedAlgorithm == "KMP" ? 0 : 1
+                };
 
-            // Simulate results
-            pictureBoxMatch.Image = pictureBoxInput.Image; // For demonstration, just copy the input image
-            pictureBoxBiodata.Image = pictureBoxInput.Image; // For demonstration, just copy the input image
-            lblSearchTime.Text = $"Waktu Pencarian: {stopwatch.ElapsedMilliseconds} ms";
-            lblMatchPercentage.Text = "Persentase Kecocokan: 95%"; // Simulated match percentage
+                // Serialize request body to JSON
+                string jsonBody = JsonConvert.SerializeObject(requestBody);
+
+                // Send request to API
+                string apiUrl = "http://localhost:5018/api/SidikJari";
+                using (HttpClient client = new HttpClient())
+                {
+                    var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                    var response = await client.PostAsync(apiUrl, content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseData = await response.Content.ReadAsStringAsync();
+                        // Deserialize JSON response
+                        var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(responseData);
+                        // Update UI with response data
+                        UpdateUI(apiResponse);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to get response from the server.");
+                    }
+                }
+            }
+            finally
+            {
+                // Close loading dialog
+                progressBar.Visible = false;
+            }
         }
 
-        [STAThread]
-        static void Main()
+        private void UpdateUI(ApiResponse apiResponse)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            // Display time execution
+            lblSearchTime.Text = $"Search Time: {apiResponse.timeExecution}";
+
+            // Check if sidikJariRes is not null
+            if (apiResponse.sidikJariRes != null)
+            {
+                // Display match percentage
+                lblMatchPercentage.Text = $"Match Percentage: {apiResponse.sidikJariRes.similarity}";
+
+                // Display sidik jari if available
+                var sidikJari = apiResponse.sidikJariRes;
+                DisplaySidikJari(sidikJari);
+            }
+            else
+            {
+                // Handle case when sidikJariRes is null
+                lblMatchPercentage.Text = "Match Percentage: N/A";
+                MessageBox.Show("Sidik jari data is not found.");
+            }
+
+            // Display biodata if available
+            if (apiResponse.biodataRes != null && apiResponse.biodataRes.Count > 0)
+            {
+                var biodata = apiResponse.biodataRes[0];
+                // Display biodata in the PictureBox
+                DisplayBiodata(biodata);
+            }
         }
+
+
+        private void DisplayBiodata(BiodataData biodata)
+        {
+            // Display biodata in the PictureBox or any other UI element as desired
+            pictureBoxBiodata.Image = null; // Clear previous image
+            // Create a string representation of the biodata and display it in a PictureBox or any other UI element as desired
+            string biodataString = $"Name: {biodata.nama}\n" +
+                                   $"NIK: {biodata.nik}\n" +
+                                   $"Place of Birth: {biodata.tempat_lahir}\n" +
+                                   $"Date of Birth: {biodata.tanggal_lahir}\n" +
+                                   $"Gender: {biodata.jenis_kelamin}\n" +
+                                   $"Blood Type: {biodata.golongan_darah}\n" +
+                                   $"Address: {biodata.alamat}\n" +
+                                   $"Religion: {biodata.agama}\n" +
+                                   $"Marital Status: {biodata.status_perkawinan}\n" +
+                                   $"Occupation: {biodata.pekerjaan}\n" +
+                                   $"Nationality: {biodata.kewarganegaraan}\n" +
+                                   $"Similarity: {biodata.similarity}";
+            MessageBox.Show(biodataString, "Biodata");
+        }
+
+        private void DisplaySidikJari(SidikJariData sidikJari)
+        {
+            // Display sidik jari in the PictureBox or any other UI element as desired
+            pictureBoxMatch.Image = null; // Clear previous image
+            // Display sidik jari image from the response in the PictureBox
+            // Example: pictureBoxMatch.Image = Base64ToImage(sidikJari.berkas_citra);
+        }
+
+        private string ImageToBase64(Image image)
+        {
+            // Convert image to base64 string
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, image.RawFormat);
+                byte[] imageBytes = ms.ToArray();
+                return Convert.ToBase64String(imageBytes);
+            }
+        }
+
+        //[STAThread]
+        // static void Main()
+        // {
+        //     Application.EnableVisualStyles();
+        //     Application.SetCompatibleTextRenderingDefault(false);
+        //     Application.Run(new MainForm());
+        // }
     }
 }

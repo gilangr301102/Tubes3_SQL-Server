@@ -46,7 +46,7 @@ namespace api.Migrations
             {
                 Id = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                berkas_citra = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                berkas_citra = table.Column<string>(type: "varchar(max)", nullable: false),
                 nama = table.Column<string>(type: "nvarchar(200)", maxLength: 100, nullable: false)
             },
             constraints: table =>
@@ -55,11 +55,11 @@ namespace api.Migrations
             });
 
             var dataFilePath = Path.Combine(Directory.GetCurrentDirectory(), "datas.json");
-            var data = LoadDataFromFile(dataFilePath);
+            var data = FileHelper.LoadDataFromFile(dataFilePath);
 
-            var imagePaths = GetAllImagePaths();
+            var imagePaths = FileHelper.GetAllImagePaths();
 
-            var randomNames = GenerateRandomNames(10, data);
+            var randomNames = GenerateRandomNames(data);
 
             var usedNIKs = new HashSet<string>();
 
@@ -68,9 +68,9 @@ namespace api.Migrations
             var biodataEntries = new List<BiodataMigration>();
             var sidikJariEntries = new List<SidikJariMigration>();
 
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < 8; i++)
             {
-                Console.WriteLine($"Processing entry {i + 1}/{18}...");
+                Console.WriteLine($"Processing entry {i + 1}/{8}...");
 
                 string nik;
                 do
@@ -79,16 +79,9 @@ namespace api.Migrations
                 } while (usedNIKs.Contains(nik));
                 usedNIKs.Add(nik);
 
-                var name = randomNames[i % 10];
+                var name = randomNames[i];
 
-                var binaryMatrix = ImageConverter.BitmapToBinaryMatrix(imagePaths[i]);
-                var asciiSegments = ImageConverter.Get30PixelAscii(binaryMatrix);
-                var asciiBuilder = new StringBuilder();
-                foreach (var segment in asciiSegments)
-                {
-                    asciiBuilder.Append(segment);
-                }
-                var base64Segment = asciiBuilder.ToString();
+                string asciiSegments = ImageConverter.GetASCII8Bit(imagePaths[i]).Replace("==", "");
 
                 var gender = random.Next(2) == 0 ? "LakiLaki" : "Perempuan";
                 var bloodType = data.bloodTypes[random.Next(data.bloodTypes.Count)];
@@ -107,27 +100,25 @@ namespace api.Migrations
 
                 biodataEntries.Add(new BiodataMigration
                 {
-                    NIK = AesEncryption.EncryptString(nik),
-                    agama = AesEncryption.EncryptString(randomReligion),
-                    alamat = AesEncryption.EncryptString(randomAddress),
-                    golongan_darah = AesEncryption.EncryptString(bloodType),
-                    jenis_kelamin = AesEncryption.EncryptString(gender),
-                    kewarganegaraan = AesEncryption.EncryptString(randomNationality),
-                    nama = AesEncryption.EncryptString(name),
-                    pekerjaan = AesEncryption.EncryptString(randomJob),
-                    status_perkawinan = AesEncryption.EncryptString(maritalStatus),
-                    tanggal_lahir = AesEncryption.EncryptString(randomBirthDate.ToString("yyyy-MM-dd")),
-                    tempat_lahir = AesEncryption.EncryptString(city)
+                    NIK = AesEncryption.EncryptWithPadding(nik),
+                    agama = AesEncryption.EncryptWithPadding(randomReligion),
+                    alamat = AesEncryption.EncryptWithPadding(randomAddress),
+                    golongan_darah = AesEncryption.EncryptWithPadding(bloodType),
+                    jenis_kelamin = AesEncryption.EncryptWithPadding(gender),
+                    kewarganegaraan = AesEncryption.EncryptWithPadding(randomNationality),
+                    nama = AesEncryption.EncryptWithPadding(name),
+                    pekerjaan = AesEncryption.EncryptWithPadding(randomJob),
+                    status_perkawinan = AesEncryption.EncryptWithPadding(maritalStatus),
+                    tanggal_lahir = AesEncryption.EncryptWithPadding(randomBirthDate.ToString("yyyy-MM-dd")),
+                    tempat_lahir = AesEncryption.EncryptWithPadding(city)
                 });
 
                 var alayName = ConvertNormalToAlay.ConvertToAlay(name);
 
-                string berkasCitra = base64Segment;
-
                 sidikJariEntries.Add(new SidikJariMigration
                 {
-                    berkas_citra = AesEncryption.EncryptString(berkasCitra),
-                    nama = AesEncryption.EncryptString(alayName)
+                    berkas_citra = asciiSegments,
+                    nama = alayName
                 });
             }
 
@@ -148,31 +139,14 @@ namespace api.Migrations
             }
         }
 
-        private static string[] GetAllImagePaths()
-        {
-            var datasetDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Dataset");
-            var imagePaths = Directory.GetFiles(datasetDirectory, "*.BMP");
-
-            return imagePaths;
-        }
-
         private static string GenerateRandomNIK(Random random)
         {
             return random.Next(100000, 999999).ToString("D10");
         }
 
-        private static string[] GenerateRandomNames(int count, DataModel data)
+        private static string[] GenerateRandomNames(DataModel data)
         {
-            var random = new Random();
-            return Enumerable.Range(0, count)
-                             .Select(_ => data.names[random.Next(data.names.Count)])
-                             .ToArray();
-        }
-
-        private static DataModel LoadDataFromFile(string filePath)
-        {
-            var json = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<DataModel>(json);
+            return data.names.ToArray();
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

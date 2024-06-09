@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using api.Models;
-using api.Utils.Algorithm;
-using api.Utils.Converter;
-using System;
-using System.Collections.Generic;
-using api.Repositories;
-using Microsoft.EntityFrameworkCore;
 using api.Interfaces;
+using System.Diagnostics;
+using api.Utils.Converter;
+using api.Utils.Helper;
 
 namespace api.Controllers
 {
@@ -25,36 +22,49 @@ namespace api.Controllers
             _sidikJariRepository = sidikJariRepository;
         }
 
-        // POST api/biodata
-        [HttpPost("biodata")]
-        public IActionResult PostBiodata([FromBody] BiodataRequest inputBiodata)
-        {
-            var matchedBiodata = _biodataRepository.GetBiodataByName(inputBiodata.nama);
-
-            if (matchedBiodata != null && matchedBiodata.Count > 0)
-            {
-                return Ok(matchedBiodata);
-            }
-            else
-            {
-                return Ok("No matching biodata found.");
-            }
-        }
-
         // POST api/sidikjari
-        [HttpPost("sidikjari")]
+        [HttpPost("")]
         public IActionResult PostSidikJari([FromBody] SidikJariRequest inputSidikJari)
         {
-            var matchedSidikJari = _sidikJariRepository.GetSidikJariByberkas_citra(inputSidikJari.berkas_citra);
+            // Create a new Stopwatch instance
+            Stopwatch stopwatch = new Stopwatch();
+
+            // Start the stopwatch
+            stopwatch.Start();
+
+            SidikJariResponse? matchedSidikJari = _sidikJariRepository.GetSidikJariByberkas_citra(inputSidikJari.berkas_citra);
+
+            string message = "No matching data found.";
+
+            ICollection<BiodataResponse>? matchedBiodata = null;
 
             if (matchedSidikJari != null)
             {
-                return Ok(matchedSidikJari);
+                matchedBiodata = _biodataRepository.GetBiodataByName(matchedSidikJari.nama);
+
+                if (matchedBiodata != null && matchedBiodata.Count > 0)
+                {
+                    Console.WriteLine($"Reconstructed image saved to {"reconstructed_image.png"}");
+                    FileHelper.ConvertBmpToPng(matchedSidikJari.Id-1);
+                    message = "Matching data found.";
+                }
             }
-            else
+
+            // Stop the stopwatch
+            stopwatch.Stop();
+
+            // Get the elapsed time as a TimeSpan value
+            TimeSpan elapsed = stopwatch.Elapsed;
+
+            var response = new APIResponse
             {
-                return Ok("No matching Sidik Jari found.");
-            }
+                biodataRes = matchedBiodata,
+                sidikJariRes = matchedSidikJari,
+                message = message,
+                timeExecution = $"{elapsed.TotalMilliseconds} ms",
+            };
+
+            return Ok(response);
         }
     }
 }
