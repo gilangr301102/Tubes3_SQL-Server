@@ -18,7 +18,7 @@ namespace api.Repositories
 
         public SidikJariResponse? GetSidikJariByberkas_citra(string berkasCitra, int algorithm = 0)
         {
-            var sidikJaris = _context.SidikJariResponse.ToList();
+            var sidikJaris = _context.sidik_jari.ToList();
 
             foreach (var sidikJari in sidikJaris)
             {

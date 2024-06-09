@@ -34,7 +34,6 @@
     <Folder Include="Routes\" />
     <Folder Include="Controllers\" />
     <Folder Include="Utils\Algorithm\" />
-    <Folder Include="Utils\Converter\" />
     <Folder Include="Database\Data\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Repositories\" />
