@@ -28,37 +28,5 @@ namespace api.Database.Data
             modelBuilder.Entity<SidikJari>()
                 .HasKey(b => b.berkas_citra);
         }
-
-        // public override int SaveChanges()
-        // {
-        //     EncryptData();
-        //     return base.SaveChanges();
-        // }
-
-        // private void EncryptData()
-        // {
-        //     var entities = ChangeTracker.Entries()
-        //         .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified)
-        //         .Select(x => x.Entity);
-
-        //     foreach (var entity in entities)
-        //     {
-        //         if (entity is Biodata biodata)
-        //         {
-        //             biodata.agama = AesEncryption.EncryptString(biodata.agama);
-        //             biodata.alamat = AesEncryption.EncryptString(biodata.alamat);
-        //             biodata.golongan_darah = AesEncryption.EncryptString(biodata.golongan_darah);
-        //             biodata.kewarganegaraan = AesEncryption.EncryptString(biodata.kewarganegaraan);
-        //             biodata.nama = AesEncryption.EncryptString(biodata.nama);
-        //             biodata.pekerjaan = AesEncryption.EncryptString(biodata.pekerjaan);
-        //             biodata.tempat_lahir = AesEncryption.EncryptString(biodata.tempat_lahir);
-        //             biodata.tanggal_lahir = AesEncryption.EncryptString(biodata.tanggal_lahir);
-        //         }
-        //         else if (entity is SidikJari sidikJari)
-        //         {
-        //             sidikJari.nama = AesEncryption.EncryptString(sidikJari.nama);
-        //         }
-        //     }
-        // }
     }
 }

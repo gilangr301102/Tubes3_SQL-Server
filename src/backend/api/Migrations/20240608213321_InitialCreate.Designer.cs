@@ -73,35 +73,35 @@ namespace api.Migrations
 
             b.ToTable("biodata");
 
-            b.HasData(
-                new
-                {
-                    NIK = AesEncryption.EncryptString("1352123456"),
-                    agama = AesEncryption.EncryptString("Religion A"),
-                    alamat = AesEncryption.EncryptString("Address A"),
-                    golongan_darah = AesEncryption.EncryptString("O"),
-                    jenis_kelamin = AesEncryption.EncryptString("LakiLaki"),
-                    kewarganegaraan = AesEncryption.EncryptString("Country A"),
-                    nama = AesEncryption.EncryptString("John Doe"),
-                    pekerjaan = AesEncryption.EncryptString("Job A"),
-                    status_perkawinan = AesEncryption.EncryptString("BelumMenikah"),
-                    tanggal_lahir = AesEncryption.EncryptString("1990-01-01"),
-                    tempat_lahir = AesEncryption.EncryptString("City A")
-                },
-                new
-                {
-                    NIK = AesEncryption.EncryptString("1352123457"),
-                    agama = AesEncryption.EncryptString("Religion B"),
-                    alamat = AesEncryption.EncryptString("Address B"),
-                    golongan_darah = AesEncryption.EncryptString("A"),
-                    jenis_kelamin = AesEncryption.EncryptString("Perempuan"),
-                    kewarganegaraan = AesEncryption.EncryptString("Country B"),
-                    nama = AesEncryption.EncryptString("Jane Smith"),
-                    pekerjaan = AesEncryption.EncryptString("Job B"),
-                    status_perkawinan = AesEncryption.EncryptString("Menikah"),
-                    tanggal_lahir = AesEncryption.EncryptString("1992-02-02"),
-                    tempat_lahir = AesEncryption.EncryptString("City B")
-                });
+            // b.HasData(
+            //     new
+            //     {
+            //         NIK = AesEncryption.EncryptString("1352123456"),
+            //         agama = AesEncryption.EncryptString("Religion A"),
+            //         alamat = AesEncryption.EncryptString("Address A"),
+            //         golongan_darah = AesEncryption.EncryptString("O"),
+            //         jenis_kelamin = AesEncryption.EncryptString("LakiLaki"),
+            //         kewarganegaraan = AesEncryption.EncryptString("Country A"),
+            //         nama = AesEncryption.EncryptString("John Doe"),
+            //         pekerjaan = AesEncryption.EncryptString("Job A"),
+            //         status_perkawinan = AesEncryption.EncryptString("BelumMenikah"),
+            //         tanggal_lahir = AesEncryption.EncryptString("1990-01-01"),
+            //         tempat_lahir = AesEncryption.EncryptString("City A")
+            //     },
+            //     new
+            //     {
+            //         NIK = AesEncryption.EncryptString("1352123457"),
+            //         agama = AesEncryption.EncryptString("Religion B"),
+            //         alamat = AesEncryption.EncryptString("Address B"),
+            //         golongan_darah = AesEncryption.EncryptString("A"),
+            //         jenis_kelamin = AesEncryption.EncryptString("Perempuan"),
+            //         kewarganegaraan = AesEncryption.EncryptString("Country B"),
+            //         nama = AesEncryption.EncryptString("Jane Smith"),
+            //         pekerjaan = AesEncryption.EncryptString("Job B"),
+            //         status_perkawinan = AesEncryption.EncryptString("Menikah"),
+            //         tanggal_lahir = AesEncryption.EncryptString("1992-02-02"),
+            //         tempat_lahir = AesEncryption.EncryptString("City B")
+            //     });
             // b.HasData(
             //     new
             //     {
@@ -146,17 +146,17 @@ namespace api.Migrations
 
                 b.ToTable("sidik_jari");
 
-                b.HasData(
-                    new
-                    {
-                        berkas_citra = AesEncryption.EncryptString("FingerprintImage1"),
-                        nama = AesEncryption.EncryptString("John Doe")
-                    },
-                    new
-                    {
-                        berkas_citra = AesEncryption.EncryptString("FingerprintImage2"),
-                        nama = AesEncryption.EncryptString("Jane Smith")
-                    });
+                // b.HasData(
+                //     new
+                //     {
+                //         berkas_citra = AesEncryption.EncryptString("FingerprintImage1"),
+                //         nama = AesEncryption.EncryptString("John Doe")
+                //     },
+                //     new
+                //     {
+                //         berkas_citra = AesEncryption.EncryptString("FingerprintImage2"),
+                //         nama = AesEncryption.EncryptString("Jane Smith")
+                //     });
             });
 #pragma warning restore 612, 618
         }
