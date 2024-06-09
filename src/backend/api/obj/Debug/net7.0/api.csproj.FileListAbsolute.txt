@@ -243,3 +243,4 @@ C:\Users\Madifa\Documents\Tubes3_SQL-Server\src\backend\api\obj\Debug\net7.0\sco
 C:\Users\Madifa\Documents\Tubes3_SQL-Server\src\backend\api\obj\Debug\net7.0\api.csproj.Up2Date
 C:\Users\Madifa\Documents\Tubes3_SQL-Server\src\backend\api\obj\Debug\net7.0\api.genruntimeconfig.cache
 C:\Users\Madifa\Documents\Tubes3_SQL-Server\src\backend\api\obj\Debug\net7.0\ref\api.dll
+C:\Users\Madifa\Documents\Tubes3_SQL-Server\src\backend\api\bin\Debug\net7.0\datas.json

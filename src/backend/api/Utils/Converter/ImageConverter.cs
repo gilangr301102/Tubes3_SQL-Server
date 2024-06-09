@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -8,37 +9,54 @@ namespace api.Utils.Converter
 {
     public static class ImageConverter
     {
-        // Define grayscale conversion coefficients
         private const double RedCoefficient = 0.299;
         private const double GreenCoefficient = 0.587;
         private const double BlueCoefficient = 0.114;
 
-        // bitmap -> pengolahan bitmap keseluruhan
         public static int[,] BitmapToBinaryMatrix(string imagePath)
         {
-            using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
+            Console.WriteLine($"Converting image at {imagePath} to binary matrix...");
+            using (var image = Image.Load<Rgba32>(imagePath))
             {
                 int width = image.Width;
                 int height = image.Height;
                 int[,] binaryValues = new int[width, height];
 
-                for (int y = 0; y < height; y++)
+                using (var sha256 = SHA256.Create())
                 {
-                    for (int x = 0; x < width; x++)
+                    // Convert the image to a byte array
+                    byte[] imageData;
+                    using (var stream = new MemoryStream())
                     {
-                        Rgba32 pixelColor = image[x, y];
-                        int grayscaleValue = (int)(pixelColor.R * RedCoefficient + pixelColor.G * GreenCoefficient + pixelColor.B * BlueCoefficient);
-                        binaryValues[x, y] = (grayscaleValue < 128) ? 0 : 1;
+                        image.SaveAsBmp(stream);
+                        imageData = stream.ToArray();
+                    }
+
+                    // Compute the SHA-256 hash of the image byte array
+                    byte[] hash = sha256.ComputeHash(imageData);
+
+                    // Convert the hash to a binary matrix
+                    int index = 0;
+                    for (int y = 0; y < height; y++)
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+                            // Use only the least significant bit of each byte in the hash
+                            int grayscaleValue = hash[index] & 0x01;
+                            binaryValues[x, y] = grayscaleValue;
+                            index = (index + 1) % hash.Length;
+                        }
                     }
                 }
 
+                Console.WriteLine($"Conversion to binary matrix completed.");
                 return binaryValues;
             }
         }
 
-        // array -> pengolahan 30 pixel
         public static string[] Get30PixelAscii(int[,] binaryValues)
         {
+            Console.WriteLine("Converting binary matrix to 30-pixel ASCII segments...");
             int width = binaryValues.GetLength(0);
             int height = binaryValues.GetLength(1);
             List<string> asciiSegments = new List<string>();
@@ -62,33 +80,32 @@ namespace api.Utils.Converter
                 }
             }
 
+            Console.WriteLine("Conversion to 30-pixel ASCII segments completed.");
             return asciiSegments.ToArray();
         }
 
-        // Encode ASCII 8-bit string to Base64
         public static string EncodeAsciiToBase64(string asciiString)
         {
+            Console.WriteLine("Encoding ASCII to Base64...");
             byte[] asciiBytes = Encoding.ASCII.GetBytes(asciiString);
-            return Convert.ToBase64String(asciiBytes);
+            string base64String = Convert.ToBase64String(asciiBytes);
+            Console.WriteLine("Encoding to Base64 completed.");
+            return base64String;
         }
 
-        // contoh penggunaan
         public static void Main()
         {
             string currentDirectory = Directory.GetCurrentDirectory();
             Console.WriteLine($"Current Directory: {currentDirectory}");
 
-            // Define the relative path to the image from the utils folder
             string relativePath = @"Dataset/1__M_Left_index_finger_CR.BMP";
             string absolutePath = Path.GetFullPath(relativePath);
 
-            // Print the absolute path to verify it is correct
             Console.WriteLine($"Absolute Path: {absolutePath}");
 
             int[,] temp = BitmapToBinaryMatrix(absolutePath);
             string[] asciiSegments = Get30PixelAscii(temp);
 
-            // Output each segment data
             for (int i = 0; i < asciiSegments.Length; i++)
             {
                 Console.WriteLine($"Segment {i + 1} data (ASCII):");
@@ -97,3 +114,4 @@ namespace api.Utils.Converter
         }
     }
 }
+

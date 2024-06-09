@@ -12,53 +12,21 @@ namespace api.Database.Data
         {
         }
 
-        public DbSet<Biodata> Biodata { get; set; }
-        public DbSet<SidikJari> SidikJari { get; set; }
+        public DbSet<BiodataResponse> BiodataResponse { get; set; }
+        public DbSet<SidikJariResponse> SidikJariResponse { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure primary key for Biodata
-            modelBuilder.Entity<Biodata>()
+            // Configure primary key for BiodataResponse
+            modelBuilder.Entity<BiodataResponse>()
                 .HasKey(b => b.NIK);
 
-            // Configure SidikJari as keyless
-            modelBuilder.Entity<SidikJari>()
-                .HasKey(b => b.berkas_citra);
+            // Configure SidikJariResponse as keyless
+            modelBuilder.Entity<SidikJariResponse>()
+                .HasKey(b => b.Id);
         }
-
-        // public override int SaveChanges()
-        // {
-        //     EncryptData();
-        //     return base.SaveChanges();
-        // }
-
-        // private void EncryptData()
-        // {
-        //     var entities = ChangeTracker.Entries()
-        //         .Where(x => x.State == EntityState.Added || x.State == EntityState.Modified)
-        //         .Select(x => x.Entity);
-
-        //     foreach (var entity in entities)
-        //     {
-        //         if (entity is Biodata biodata)
-        //         {
-        //             biodata.agama = AesEncryption.EncryptString(biodata.agama);
-        //             biodata.alamat = AesEncryption.EncryptString(biodata.alamat);
-        //             biodata.golongan_darah = AesEncryption.EncryptString(biodata.golongan_darah);
-        //             biodata.kewarganegaraan = AesEncryption.EncryptString(biodata.kewarganegaraan);
-        //             biodata.nama = AesEncryption.EncryptString(biodata.nama);
-        //             biodata.pekerjaan = AesEncryption.EncryptString(biodata.pekerjaan);
-        //             biodata.tempat_lahir = AesEncryption.EncryptString(biodata.tempat_lahir);
-        //             biodata.tanggal_lahir = AesEncryption.EncryptString(biodata.tanggal_lahir);
-        //         }
-        //         else if (entity is SidikJari sidikJari)
-        //         {
-        //             sidikJari.nama = AesEncryption.EncryptString(sidikJari.nama);
-        //         }
-        //     }
-        // }
     }
 }
