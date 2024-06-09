@@ -39,31 +39,49 @@ namespace api.Repositories
                 biodata.kewarganegaraan = AesEncryption.DecryptString(biodata.kewarganegaraan);
                 biodata.jenis_kelamin = AesEncryption.DecryptString(biodata.jenis_kelamin);
 
-                string normalName = ConverterAlayToNormal.KonversiAlayKeNormalLogic(name, biodata.nama);
-                Console.WriteLine("debug normal name: ");
-                Console.WriteLine(normalName);
+                string normalName = ConverterAlayToNormal.GetKonversiArrayToNormal(name, biodata.nama);
+                string lowerNormalName = biodata.nama.ToLower();
                 bool isMatch = false;
+
+                double similarityPercentage = 0.0; // Initialize similarity percentage
 
                 if (algorithm == 0)
                 {
-                    isMatch = BoyerMoore.Search(biodata.nama, normalName);
+                    isMatch = BoyerMoore.Search(lowerNormalName, normalName);
                 }
                 else if (algorithm == 1)
                 {
-                    isMatch = KMP.Search(biodata.nama, normalName);
+                    isMatch = KMP.Search(lowerNormalName, normalName);
                 }
 
                 if (isMatch)
                 {
-                    result.Add(biodata);
+                    similarityPercentage = 1.0; // Set similarity to 100% if exact match
                 }
                 else
                 {
-                    var similarityHandler = new SimilarityAlayHandler(normalName, biodata.nama);
-                    if (similarityHandler.GetPercentageOfSimilarityBahasaAlay() >= 0.71)
+                    var similarityHandler = new SimilarityAlayHandler(normalName, lowerNormalName);
+                    similarityPercentage = similarityHandler.GetPercentageOfSimilarityBahasaAlay();
+                }
+
+                if(similarityPercentage >= 0.80)
+                {
+                    similarityPercentage *= 100;
+                    result.Add(new BiodataResponse
                     {
-                        result.Add(biodata);
-                    }
+                        NIK = biodata.NIK,
+                        nama = biodata.nama,
+                        tempat_lahir = biodata.tempat_lahir,
+                        tanggal_lahir = biodata.tanggal_lahir,
+                        jenis_kelamin = biodata.jenis_kelamin,
+                        golongan_darah = biodata.golongan_darah,
+                        alamat = biodata.alamat,
+                        agama = biodata.agama,
+                        status_perkawinan = biodata.status_perkawinan,
+                        pekerjaan = biodata.pekerjaan,
+                        kewarganegaraan = biodata.kewarganegaraan,
+                        similarity = similarityPercentage.ToString("F2")+"%" // Set similarity percentage
+                    });
                 }
             }
 
