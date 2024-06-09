@@ -15,6 +15,7 @@ namespace api.Models
         public required string status_perkawinan { get; set; }
         public required string pekerjaan { get; set; }
         public required string kewarganegaraan { get; set; }
+        public required string similarity { get; set; }
     }
 
     public class BiodataRequest

@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public required string berkas_citra { get; set; }
         public required string nama { get; set; }
+        public required string similarity { get; set; }
     }
 
     public class SidikJariRequest

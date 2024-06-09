@@ -22,7 +22,12 @@ namespace api.Repositories
 
             foreach (var sidikJari in sidikJaris)
             {
+                sidikJari.berkas_citra = AesEncryption.DecryptString(sidikJari.berkas_citra);
+                sidikJari.nama = AesEncryption.DecryptString(sidikJari.nama);
+
                 bool isMatch = false;
+
+                double similarityPercentage = 0.0; // Initialize similarity percentage
 
                 if (algorithm == 0)
                 {
@@ -35,15 +40,25 @@ namespace api.Repositories
 
                 if (isMatch)
                 {
-                    return sidikJari;
+                    similarityPercentage = 1.0; // Set similarity to 100% if exact match
                 }
                 else
                 {
                     var similarityHandler = new SimilarityNormalHandler(berkasCitra, sidikJari.berkas_citra);
-                    if (similarityHandler.GetPercentageOfSimilarityNormal() >= 0.80)
+                    similarityPercentage = similarityHandler.GetPercentageOfSimilarityNormal();
+                }
+
+                // If similarityPercentage is above a certain threshold, return the sidikJari
+                if (similarityPercentage >= 0.80)
+                {
+                    similarityPercentage *= 100;
+                    return new SidikJariResponse
                     {
-                        return sidikJari;
-                    }
+                        Id = sidikJari.Id,
+                        berkas_citra = sidikJari.berkas_citra,
+                        nama = sidikJari.nama,
+                        similarity = similarityPercentage.ToString("F2") + "%" // Set similarity percentage
+                    };
                 }
             }
 

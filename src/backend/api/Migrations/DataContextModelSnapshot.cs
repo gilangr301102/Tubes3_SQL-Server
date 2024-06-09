@@ -21,7 +21,7 @@ namespace api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("api.Models.BiodataResponse", b =>
+            modelBuilder.Entity("api.Models.BiodataMigration", b =>
                 {
                     b.Property<string>("NIK")
                         .HasColumnType("nvarchar(450)");
@@ -99,7 +99,7 @@ namespace api.Migrations
                         });
                 });
 
-            modelBuilder.Entity("api.Models.SidikJariResponse", b =>
+            modelBuilder.Entity("api.Models.SidikJariMigration", b =>
                 {
                     b.Property<string>("berkas_citra")
                         .HasColumnType("nvarchar(450)");
