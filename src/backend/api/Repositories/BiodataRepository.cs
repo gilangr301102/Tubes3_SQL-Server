@@ -20,7 +20,7 @@ namespace api.Repositories
 
         public ICollection<Biodata> GetBiodataByName(string name, int algorithm = 0)
         {
-            var biodatas = _context.Biodatas.ToList();
+            var biodatas = _context.Biodata.ToList();
             var result = new List<Biodata>();
 
             foreach (var biodata in biodatas)

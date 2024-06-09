@@ -66,7 +66,7 @@ namespace api.Migrations
 
                     b.HasKey("NIK");
 
-                    b.ToTable("Biodatas");
+                    b.ToTable("biodata");
 
                     b.HasData(
                         new
@@ -110,7 +110,7 @@ namespace api.Migrations
 
                     b.HasKey("berkas_citra");
 
-                    b.ToTable("SidikJaries");
+                    b.ToTable("sidik_jari");
 
                     b.HasData(
                         new
