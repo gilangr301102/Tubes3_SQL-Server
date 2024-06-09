@@ -5,15 +5,15 @@ namespace api.Models
     public class Biodata
     {
         public required string NIK { get; set; }
-        public required string Nama { get; set; }
-        public required string TempatLahir { get; set; }
-        public required string TanggalLahir { get; set; }
-        public required KelaminEnum JenisKelamin { get; set; }
-        public required string GolonganDarah { get; set; }
-        public required string Alamat { get; set; }
-        public required string Agama { get; set; }
-        public required StatusPerkawinanEnum StatusPerkawinan { get; set; }
-        public required string Pekerjaan { get; set; }
-        public required string Kewarganegaraan { get; set; }
+        public required string nama { get; set; }
+        public required string tempat_lahir { get; set; }
+        public required string tanggal_lahir { get; set; }
+        public required KelaminEnum jenis_kelamin { get; set; }
+        public required string golongan_darah { get; set; }
+        public required string alamat { get; set; }
+        public required string agama { get; set; }
+        public required status_perkawinanEnum status_perkawinan { get; set; }
+        public required string pekerjaan { get; set; }
+        public required string kewarganegaraan { get; set; }
     }
 }

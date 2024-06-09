@@ -1,18 +1,17 @@
-﻿using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Collections.Generic;
+using System.Linq;
 using api.Database.Data;
 using api.Interfaces;
-using api.Models; // Assuming Biodata model is in this namespace
+using api.Models;
 using api.Utils.Algorithm;
 using api.Utils.Converter;
 using api.Utils.Helper;
-// Add any additional using directives if needed to resolve assembly references
 
 namespace api.Repositories
 {
     public class BiodataRepository : IBiodataRepository
     {
-        private readonly DataContext _context; // Ensure Context is properly referenced
+        private readonly DataContext _context;
 
         public BiodataRepository(DataContext context)
         {
@@ -26,16 +25,16 @@ namespace api.Repositories
 
             foreach (var biodata in biodatas)
             {
-                string normalName = ConverterAlayToNormal.KonversiAlayKeNormalLogic(name, biodata.Nama);
+                string normalName = ConverterAlayToNormal.KonversiAlayKeNormalLogic(name, biodata.nama);
                 bool isMatch = false;
 
                 if (algorithm == 0)
                 {
-                    isMatch = BoyerMoore.Search(biodata.Nama, normalName);
+                    isMatch = BoyerMoore.Search(biodata.nama, normalName);
                 }
                 else if (algorithm == 1)
                 {
-                    isMatch = KMP.Search(biodata.Nama, normalName);
+                    isMatch = KMP.Search(biodata.nama, normalName);
                 }
 
                 if (isMatch)
@@ -44,8 +43,8 @@ namespace api.Repositories
                 }
                 else
                 {
-                    var similarityHandler = new SimilarityAlayHandler(normalName, biodata.Nama);
-                    if(similarityHandler.GetPercentageOfSimilarityBahasaAlay() >= 0.71)
+                    var similarityHandler = new SimilarityAlayHandler(normalName, biodata.nama);
+                    if (similarityHandler.GetPercentageOfSimilarityBahasaAlay() >= 0.71)
                     {
                         result.Add(biodata);
                     }

@@ -16,7 +16,7 @@ namespace api.Repositories
             _context = context;
         }
 
-        public SidikJari? GetSidikJariByBerkasCitra(string berkasCitra, int algorithm = 0)
+        public SidikJari? GetSidikJariByberkas_citra(string berkasCitra, int algorithm = 0)
         {
             var sidikJaris = _context.SidikJaries.ToList();
 
@@ -26,11 +26,11 @@ namespace api.Repositories
 
                 if (algorithm == 0)
                 {
-                    isMatch = BoyerMoore.Search(sidikJari.BerkasCitra, berkasCitra);
+                    isMatch = BoyerMoore.Search(sidikJari.berkas_citra, berkasCitra);
                 }
                 else if (algorithm == 1)
                 {
-                    isMatch = KMP.Search(sidikJari.BerkasCitra, berkasCitra);
+                    isMatch = KMP.Search(sidikJari.berkas_citra, berkasCitra);
                 }
 
                 if (isMatch)
@@ -39,7 +39,7 @@ namespace api.Repositories
                 }
                 else
                 {
-                    var similarityHandler = new SimilarityNormalHandler(berkasCitra, sidikJari.BerkasCitra);
+                    var similarityHandler = new SimilarityNormalHandler(berkasCitra, sidikJari.berkas_citra);
                     if (similarityHandler.GetPercentageOfSimilarityNormal() >= 0.80)
                     {
                         return sidikJari;

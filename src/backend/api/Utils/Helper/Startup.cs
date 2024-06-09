@@ -4,17 +4,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using api.Database.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace api.Utils.Helper
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -23,6 +25,9 @@ namespace api.Utils.Helper
 
             // Add the DbContext to the services container
             services.AddDbContext<DataContext>();
+            // services.AddDbContext<DataContext>(options =>
+            // options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

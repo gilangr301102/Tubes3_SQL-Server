@@ -30,7 +30,7 @@ namespace api.Controllers
         public IActionResult PostSidikJari([FromBody] SidikJari inputSidikJari)
         {
             // Convert image to ASCII
-            //string asciiImage = ImageConverter.ConvertImageToAscii(inputSidikJari.BerkasCitra);
+            //string asciiImage = ImageConverter.ConvertImageToAscii(inputSidikJari.berkas_citra);
             //if (asciiImage == null)
             //{
             //    return StatusCode(500, "Error converting image to ASCII");
@@ -39,9 +39,9 @@ namespace api.Controllers
             //// Search for the ASCII image in the SidikJari database using Boyer-Moore algorithm
             //SidikJari matchedSidikJari = this.FindSidikJariByAsciiImage(asciiImage);
 
-            //if (matchedSidikJari == null) return Ok($"Similarity: {ComputeSimilarityBerkasCitra(asciiImage)}");
+            //if (matchedSidikJari == null) return Ok($"Similarity: {ComputeSimilarityberkas_citra(asciiImage)}");
             return Ok($"Matched Name: ");
-            //return Ok($"Matched Name: {matchedSidikJari.Nama}");
+            //return Ok($"Matched Name: {matchedSidikJari.nama}");
         }
 
         //// Helper method to find SidikJari by ASCII image using Boyer-Moore algorithm
@@ -50,7 +50,7 @@ namespace api.Controllers
         //    foreach (var sidikJari in _sidikJariDatabase)
         //    {
         //        // Search for the asciiImage in the database
-        //        bool isCitraFound = BoyerMoore.Search(sidikJari.BerkasCitra, asciiImage);
+        //        bool isCitraFound = BoyerMoore.Search(sidikJari.berkas_citra, asciiImage);
         //        if (isCitraFound)
         //        {
         //            // Assuming you want to return the first occurrence
@@ -61,12 +61,12 @@ namespace api.Controllers
         //    return null; // If no match found
         //}
 
-        //private int ComputeSimilarityBerkasCitra(string berkasCitra)
+        //private int ComputeSimilarityberkas_citra(string berkasCitra)
         //{
         //    int maxSimilarity = 0;
         //    foreach(var sidikJari in _sidikJariDatabase)
         //    {
-        //        int similarity = LCS.ComputeSimilarity(sidikJari.BerkasCitra, berkasCitra);
+        //        int similarity = LCS.ComputeSimilarity(sidikJari.berkas_citra, berkasCitra);
         //        if(maxSimilarity < similarity)
         //        {
         //            maxSimilarity = similarity;

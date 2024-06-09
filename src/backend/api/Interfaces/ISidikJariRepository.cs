@@ -5,7 +5,7 @@ namespace api.Interfaces
 {
 	public interface ISidikJariRepository
 	{
-        SidikJari? GetSidikJariByBerkasCitra(string berkasCitra, int algorithm = 0);
+        SidikJari? GetSidikJariByberkas_citra(string berkasCitra, int algorithm = 0);
     }
 }
 

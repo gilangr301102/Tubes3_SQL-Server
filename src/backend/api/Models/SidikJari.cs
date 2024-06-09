@@ -2,7 +2,7 @@
 {
     public class SidikJari
     {
-        public required string BerkasCitra { get; set; }
-        public required string Nama { get; set; }
+        public required string berkas_citra { get; set; }
+        public required string nama { get; set; }
     }
 }

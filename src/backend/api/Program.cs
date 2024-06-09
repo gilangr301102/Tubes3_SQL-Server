@@ -1,83 +1,39 @@
-﻿using api.Interfaces;
-using api.Repositories;
-using AutoMapper;
-
-// var builder = WebApplication.CreateBuilder(args);
-
-// // Add services to the container.
-
-// builder.Services.AddControllers();
-// // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-// builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-// builder.Services.AddScoped<IBiodataRepository, BiodataRepository>();
-// builder.Services.AddScoped<ISidikJariRepository, SidikJariRepository>();
-// builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
-
-// var app = builder.Build();
-
-// // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-
-// app.UseHttpsRedirection();
-
-// app.UseAuthorization();
-
-// app.MapControllers();
-
-// app.Run();
-
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using api.Database.Data;
-using api.Utils.Helper;
-using api.Database.Seeders;
-using Microsoft.EntityFrameworkCore;
+using api.Repositories;
+using api.Interfaces;
+using AutoMapper;
 
-// public class Program
-// {
-// //    public static void Main(string[] args)
-// //    {
+var builder = WebApplication.CreateBuilder(args);
 
-// //    }
+// Add services to the container
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IBiodataRepository, BiodataRepository>();
+builder.Services.AddScoped<ISidikJariRepository, SidikJariRepository>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-//     public static IHostBuilder CreateHostBuilder(string[] args) =>
-//         Host.CreateDefaultBuilder(args)
-//             .ConfigureWebHostDefaults(webBuilder =>
-//             {
-//                 webBuilder.UseStartup<Startup>();
-//             });
-// }
+// Configure the DbContext with the connection string from appsettings.json
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+var app = builder.Build();
 
-var host = CreateHostBuilder(args).Build();
-
-using (var scope = host.Services.CreateScope())
+// Perform database migration and seeding
+using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<DataContext>();
-        var logger = services.GetRequiredService<ILogger<DbSeeder>>();
-
-        // Ensure database is created and apply pending migrations
         context.Database.Migrate();
-
-        var seed = new DbSeeder();
-
-        // Seed the database
-        seed.Seed(context, logger);
     }
     catch (Exception ex)
     {
@@ -86,4 +42,15 @@ using (var scope = host.Services.CreateScope())
     }
 }
 
-host.Run();
+// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();
