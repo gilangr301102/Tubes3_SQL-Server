@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using api.Models;
 using System.Text.Json;
-using api.Models;
 
 #nullable disable
 
@@ -66,8 +65,8 @@ namespace api.Migrations
 
             var random = new Random();
 
-            var biodataEntries = new List<BiodataRequest>();
-            var sidikJariEntries = new List<SidikJariRequest>();
+            var biodataEntries = new List<BiodataMigration>();
+            var sidikJariEntries = new List<SidikJariMigration>();
 
             for (int i = 0; i < 18; i++)
             {
@@ -106,7 +105,7 @@ namespace api.Migrations
                 var randomReligion = data.religions[random.Next(data.religions.Count)];
                 var randomAddress = data.addresses[random.Next(data.addresses.Count)];
 
-                biodataEntries.Add(new BiodataRequest
+                biodataEntries.Add(new BiodataMigration
                 {
                     NIK = AesEncryption.EncryptString(nik),
                     agama = AesEncryption.EncryptString(randomReligion),
@@ -121,11 +120,11 @@ namespace api.Migrations
                     tempat_lahir = AesEncryption.EncryptString(city)
                 });
 
-                var alayName = ConvertToAlay(name);
+                var alayName = ConvertNormalToAlay.ConvertToAlay(name);
 
                 string berkasCitra = base64Segment;
 
-                sidikJariEntries.Add(new SidikJariRequest
+                sidikJariEntries.Add(new SidikJariMigration
                 {
                     berkas_citra = AesEncryption.EncryptString(berkasCitra),
                     nama = AesEncryption.EncryptString(alayName)
@@ -174,70 +173,6 @@ namespace api.Migrations
         {
             var json = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<DataModel>(json);
-        }
-
-        private static string ConvertToAlay(string name)
-        {
-            var alayWords = new Dictionary<char, char>
-        {
-            { 'a', '4' }, { 'b', '8' }, { 'e', '3' }, { 'i', '1' }, { 'o', '0' },
-            { 's', '5' }, { 't', '7' }, { 'z', '2' }
-        };
-
-            var vowels = new HashSet<char> { 'a', 'e', 'i', 'o', 'u' };
-            var random = new Random();
-            var alayBuilder = new StringBuilder();
-
-            foreach (var word in name.Split(' '))
-            {
-                var alayWord = new StringBuilder();
-                var abbreviationWord = new StringBuilder();
-
-                foreach (var c in word.ToLower())
-                {
-                    // Convert to "alay" version
-                    if (alayWords.ContainsKey(c))
-                    {
-                        alayWord.Append(alayWords[c]);
-                    }
-                    else if (c == 'g')
-                    {
-                        alayWord.Append(random.Next(2) == 0 ? '6' : '9');  // Randomly choose between '6' and '9'
-                    }
-                    else
-                    {
-                        alayWord.Append(c);
-                    }
-
-                    // Create abbreviation by removing vowels
-                    if (!vowels.Contains(c))
-                    {
-                        abbreviationWord.Append(c);
-                    }
-                }
-
-                // Capitalize the first letter of the abbreviated word and add to the abbreviation string
-                if (abbreviationWord.Length > 0)
-                {
-                    abbreviationWord[0] = char.ToUpper(abbreviationWord[0]);
-                }
-
-                // Add the processed word to the alay string
-                alayBuilder.Append(alayWord).Append(' ');
-
-                // Append the abbreviated word to the final string
-                alayBuilder.Append(abbreviationWord).Append(' ');
-            }
-
-            // Remove the trailing space
-            if (alayBuilder.Length > 0)
-            {
-                alayBuilder.Length--;
-            }
-
-            string alayName = alayBuilder.ToString();
-
-            return alayName;
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -12,8 +12,9 @@ namespace api.Database.Data
         {
         }
 
-        public DbSet<BiodataResponse> BiodataResponse { get; set; }
-        public DbSet<SidikJariResponse> SidikJariResponse { get; set; }
+        public DbSet<BiodataResponse> biodata { get; set; }
+
+        public DbSet<SidikJariResponse> sidik_jari { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

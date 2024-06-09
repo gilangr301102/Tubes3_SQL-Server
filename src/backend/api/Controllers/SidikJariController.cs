@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using api.Repositories;
 using Microsoft.EntityFrameworkCore;
+using api.Interfaces;
 
 namespace api.Controllers
 {
@@ -13,76 +14,47 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class SidikJariController : ControllerBase
     {
-        private readonly List<SidikJariResponse> _sidikJariDatabase = new(); // Assume this is your database
-        private readonly List<BiodataResponse> _biodataDatabase = new();
-
         private readonly ILogger<SidikJariController> _logger;
-        private readonly DbContext _context;
+        private readonly IBiodataRepository _biodataRepository;
+        private readonly ISidikJariRepository _sidikJariRepository;
 
-        public SidikJariController(ILogger<SidikJariController> logger, DbContext sidikJariDbContext)
+        public SidikJariController(ILogger<SidikJariController> logger, IBiodataRepository biodataRepository, ISidikJariRepository sidikJariRepository)
         {
             _logger = logger;
-            _context = sidikJariDbContext;
+            _biodataRepository = biodataRepository;
+            _sidikJariRepository = sidikJariRepository;
+        }
+
+        // POST api/biodata
+        [HttpPost("biodata")]
+        public IActionResult PostBiodata([FromBody] BiodataRequest inputBiodata)
+        {
+            var matchedBiodata = _biodataRepository.GetBiodataByName(inputBiodata.nama);
+
+            if (matchedBiodata != null && matchedBiodata.Count > 0)
+            {
+                return Ok(matchedBiodata);
+            }
+            else
+            {
+                return Ok("No matching biodata found.");
+            }
         }
 
         // POST api/sidikjari
-        [HttpPost]
-        public IActionResult PostSidikJari([FromBody] SidikJariResponse inputSidikJari)
+        [HttpPost("sidikjari")]
+        public IActionResult PostSidikJari([FromBody] SidikJariRequest inputSidikJari)
         {
-            // Convert image to ASCII
-            //string asciiImage = ImageConverter.ConvertImageToAscii(inputSidikJari.berkas_citra);
-            //if (asciiImage == null)
-            //{
-            //    return StatusCode(500, "Error converting image to ASCII");
-            //}
+            var matchedSidikJari = _sidikJariRepository.GetSidikJariByberkas_citra(inputSidikJari.berkas_citra);
 
-            //// Search for the ASCII image in the SidikJariResponse database using Boyer-Moore algorithm
-            //SidikJariResponse matchedSidikJari = this.FindSidikJariByAsciiImage(asciiImage);
-
-            //if (matchedSidikJari == null) return Ok($"Similarity: {ComputeSimilarityberkas_citra(asciiImage)}");
-            return Ok($"Matched Name: ");
-            //return Ok($"Matched Name: {matchedSidikJari.nama}");
+            if (matchedSidikJari != null)
+            {
+                return Ok(matchedSidikJari);
+            }
+            else
+            {
+                return Ok("No matching Sidik Jari found.");
+            }
         }
-
-        //// Helper method to find SidikJariResponse by ASCII image using Boyer-Moore algorithm
-        //private SidikJariResponse? FindSidikJariByAsciiImage(string asciiImage)
-        //{
-        //    foreach (var sidikJari in _sidikJariDatabase)
-        //    {
-        //        // Search for the asciiImage in the database
-        //        bool isCitraFound = BoyerMoore.Search(sidikJari.berkas_citra, asciiImage);
-        //        if (isCitraFound)
-        //        {
-        //            // Assuming you want to return the first occurrence
-        //            return sidikJari;
-        //        }
-        //    }
-
-        //    return null; // If no match found
-        //}
-
-        //private int ComputeSimilarityberkas_citra(string berkasCitra)
-        //{
-        //    int maxSimilarity = 0;
-        //    foreach(var sidikJari in _sidikJariDatabase)
-        //    {
-        //        int similarity = LCS.ComputeSimilarity(sidikJari.berkas_citra, berkasCitra);
-        //        if(maxSimilarity < similarity)
-        //        {
-        //            maxSimilarity = similarity;
-        //        }
-        //    }
-
-        //    return maxSimilarity;
-        //}
-
-        //private List<BiodataResponse> getAllBiodataByName(string name)
-        //{
-        //    var ret = new List<BiodataResponse>();
-
-        //    // To do: Implement bahasa alay searching with pattern matching
-
-        //    return ret;
-        //}
     }
 }
