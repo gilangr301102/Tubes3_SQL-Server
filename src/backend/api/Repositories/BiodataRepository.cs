@@ -18,10 +18,10 @@ namespace api.Repositories
             _context = context;
         }
 
-        public ICollection<Biodata> GetBiodataByName(string name, int algorithm = 0)
+        public ICollection<BiodataResponse> GetBiodataByName(string name, int algorithm = 0)
         {
-            var biodatas = _context.Biodata.ToList();
-            var result = new List<Biodata>();
+            var biodatas = _context.BiodataResponse.ToList();
+            var result = new List<BiodataResponse>();
 
             foreach (var biodata in biodatas)
             {

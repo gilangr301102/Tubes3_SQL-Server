@@ -5,7 +5,7 @@ namespace api.Interfaces
 {
 	public interface IBiodataRepository
 	{
-        ICollection<Biodata> GetBiodataByName(string name, int algorithm = 0);
+        ICollection<BiodataResponse> GetBiodataByName(string name, int algorithm = 0);
     }
 }
 

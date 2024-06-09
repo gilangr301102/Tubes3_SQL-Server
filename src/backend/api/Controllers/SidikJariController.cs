@@ -13,8 +13,8 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class SidikJariController : ControllerBase
     {
-        private readonly List<SidikJari> _sidikJariDatabase = new(); // Assume this is your database
-        private readonly List<Biodata> _biodataDatabase = new();
+        private readonly List<SidikJariResponse> _sidikJariDatabase = new(); // Assume this is your database
+        private readonly List<BiodataResponse> _biodataDatabase = new();
 
         private readonly ILogger<SidikJariController> _logger;
         private readonly DbContext _context;
@@ -27,7 +27,7 @@ namespace api.Controllers
 
         // POST api/sidikjari
         [HttpPost]
-        public IActionResult PostSidikJari([FromBody] SidikJari inputSidikJari)
+        public IActionResult PostSidikJari([FromBody] SidikJariResponse inputSidikJari)
         {
             // Convert image to ASCII
             //string asciiImage = ImageConverter.ConvertImageToAscii(inputSidikJari.berkas_citra);
@@ -36,16 +36,16 @@ namespace api.Controllers
             //    return StatusCode(500, "Error converting image to ASCII");
             //}
 
-            //// Search for the ASCII image in the SidikJari database using Boyer-Moore algorithm
-            //SidikJari matchedSidikJari = this.FindSidikJariByAsciiImage(asciiImage);
+            //// Search for the ASCII image in the SidikJariResponse database using Boyer-Moore algorithm
+            //SidikJariResponse matchedSidikJari = this.FindSidikJariByAsciiImage(asciiImage);
 
             //if (matchedSidikJari == null) return Ok($"Similarity: {ComputeSimilarityberkas_citra(asciiImage)}");
             return Ok($"Matched Name: ");
             //return Ok($"Matched Name: {matchedSidikJari.nama}");
         }
 
-        //// Helper method to find SidikJari by ASCII image using Boyer-Moore algorithm
-        //private SidikJari? FindSidikJariByAsciiImage(string asciiImage)
+        //// Helper method to find SidikJariResponse by ASCII image using Boyer-Moore algorithm
+        //private SidikJariResponse? FindSidikJariByAsciiImage(string asciiImage)
         //{
         //    foreach (var sidikJari in _sidikJariDatabase)
         //    {
@@ -76,9 +76,9 @@ namespace api.Controllers
         //    return maxSimilarity;
         //}
 
-        //private List<Biodata> getAllBiodataByName(string name)
+        //private List<BiodataResponse> getAllBiodataByName(string name)
         //{
-        //    var ret = new List<Biodata>();
+        //    var ret = new List<BiodataResponse>();
 
         //    // To do: Implement bahasa alay searching with pattern matching
 

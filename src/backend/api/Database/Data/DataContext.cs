@@ -12,21 +12,21 @@ namespace api.Database.Data
         {
         }
 
-        public DbSet<Biodata> Biodata { get; set; }
-        public DbSet<SidikJari> SidikJari { get; set; }
+        public DbSet<BiodataResponse> BiodataResponse { get; set; }
+        public DbSet<SidikJariResponse> SidikJariResponse { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure primary key for Biodata
-            modelBuilder.Entity<Biodata>()
+            // Configure primary key for BiodataResponse
+            modelBuilder.Entity<BiodataRequest>()
                 .HasKey(b => b.NIK);
 
-            // Configure SidikJari as keyless
-            modelBuilder.Entity<SidikJari>()
-                .HasKey(b => b.berkas_citra);
+            // Configure SidikJariResponse as keyless
+            modelBuilder.Entity<SidikJariRequest>()
+                .HasKey(b => b.Id);
         }
     }
 }
